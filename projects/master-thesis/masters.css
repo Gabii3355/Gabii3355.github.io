@@ -362,6 +362,15 @@
   margin-top: 22px;
 }
 
+.result-card-centered {
+  width: min(100%, 760px);
+}
+
+.result-card-centered img {
+  aspect-ratio: 16 / 9;
+  max-height: 420px;
+}
+
 .results-grid-vertical {
   display: grid;
   grid-template-columns: repeat(3, minmax(220px, 1fr));
@@ -501,6 +510,33 @@
 /* =========================
    Python scripts
    ========================= */
+
+.section-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 18px;
+}
+
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border: 1px solid rgba(104, 214, 193, 0.28);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(104, 214, 193, 0.08);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.github-button:hover,
+.github-button:focus-visible {
+  background: rgba(104, 214, 193, 0.16);
+  border-color: rgba(104, 214, 193, 0.45);
+  transform: translateY(-1px);
+}
 
 .script-grid {
   display: grid;
@@ -683,6 +719,10 @@
   .challenge-grid,
   .learned-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-actions {
+    justify-content: center;
   }
 
   .data-popup {
