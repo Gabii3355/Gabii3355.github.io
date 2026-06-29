@@ -8,3 +8,12 @@ Suggested scripts to add later:
 - `scripts/dtss.py`
 - `scripts/heatmaps.py`
 - `scripts/profiles.py`
+
+TO DO:
+README.md z opisem projektu i instrukcją uruchomienia.
+Skrypty Pythona do obliczania MED i DTSS oraz generowania wykresów.
+Notebook Jupyter pokazujący pełną analizę krok po kroku.
+Dane wejściowe i przetworzone w formacie CSV.
+Folder figures z wykresami w wysokiej jakości.
+Diagram workflow projektu.
+Plik z zależnościami (requirements.txt lub environment.yml
