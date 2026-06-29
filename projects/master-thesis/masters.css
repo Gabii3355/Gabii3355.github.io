@@ -356,11 +356,18 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.results-grid-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
 .results-grid-vertical {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
   gap: 22px;
   margin-top: 28px;
+  align-items: start;
 }
 
 .result-card {
@@ -657,17 +664,16 @@
   .research-grid,
   .methodology-grid,
   .tech-grid,
-  .results-grid-main,
-  .results-grid-vertical {
+  .results-grid-main {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .results-grid-vertical {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .methodology-card:not(:last-child)::after {
     display: none;
-  }
-
-  .result-card-span {
-    grid-column: auto;
   }
 }
 
@@ -701,6 +707,10 @@
 
   .hero-figure img {
     width: 280px;
+  }
+
+  .result-card-centered {
+    width: 100%;
   }
 
   .result-card-vertical img {
