@@ -6,6 +6,7 @@
   <title>Master's Thesis | Gabriela Bieda</title>
   <link rel="stylesheet" href="../../css/main.css" />
   <link rel="stylesheet" href="masters.css" />
+  <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
 </head>
 <body>
   <div class="site">
@@ -210,6 +211,40 @@
         </div>
       </section>
 
+
+      <section class="project-section" aria-labelledby="structure-title">
+        <p class="eyebrow">Interactive 3D structures</p>
+        <h2 id="structure-title">Substrate model previews</h2>
+        <p class="section-lead">
+          Two representative substrate structures are displayed directly in the browser.
+          Each PDB model can be rotated, zoomed and moved similarly to molecular viewers such as VMD or PyMOL.
+        </p>
+
+        <div class="structure-viewer-grid">
+          <article class="structure-viewer-card">
+            <div class="viewer-heading">
+              <span>Substrate</span>
+              <h3>C model</h3>
+            </div>
+            <div id="viewer-c-substrate" class="dna-viewer"></div>
+            <p class="viewer-hint">
+              File: <code>structures/C_S_B.pdb</code>. Drag to rotate, scroll to zoom and right-click drag to move.
+            </p>
+          </article>
+
+          <article class="structure-viewer-card">
+            <div class="viewer-heading">
+              <span>Substrate</span>
+              <h3>5mC B-DNA model</h3>
+            </div>
+            <div id="viewer-5mc-substrate" class="dna-viewer"></div>
+            <p class="viewer-hint">
+              File: <code>structures/5mC_S_B.pdb</code>. Drag to rotate, scroll to zoom and right-click drag to move.
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section class="project-section" aria-labelledby="results-title">
         <p class="eyebrow">Results</p>
         <h2 id="results-title">Selected results</h2>
@@ -336,35 +371,64 @@
         <p class="eyebrow">Repository</p>
         <h2 id="repo-title">Project structure</h2>
         <p class="section-lead">
-          The repository is organized to separate raw data, processed results, scripts, figures and documentation.
-          This makes the analysis easier to reproduce and extend.
+          The repository is organized around the real analysis workflow: model preparation,
+          energy calculations, visualization scripts, figures and documentation.
         </p>
 
         <pre class="repo-tree"><code>master-thesis/
+├── index.html
+├── masters.css
 ├── README.md
-├── data/
-│   ├── MED_values.csv
-│   └── DTSS_values.csv
-├── python/
-│   ├── med_analysis.py
-│   ├── dtss.py
-│   ├── heatmaps.py
-│   ├── profiles.py
-│   ├── statistics.py
-│   ├── export_figures.py
-│   ├── compare_ADNA_BDNA.py
-│   └── interaction_components.py
+├── thesis.pdf
+├── requirements.txt
 ├── figures/
-├── workflow/
-│   └── workflow.png
-└── thesis.pdf</code></pre>
+│   ├── DNA-scheme.png
+│   ├── MED-heatmap.png
+│   ├── DTSS-heatmap.png
+│   ├── MED-profile.png
+│   ├── CAMM-Das-comparison.png
+│   ├── ADNA-BDNA-comparison.png
+│   └── favorable-sequence-context.png
+├── structures/
+│   ├── C_S_A.pdb
+│   ├── C_TS_A.pdb
+│   ├── C_S_B.pdb
+│   ├── C_TS_B.pdb
+│   ├── 5mC_S_A.pdb
+│   ├── 5mC_TS_A.pdb
+│   ├── 5mC_S_B.pdb
+│   └── 5mC_TS_B.pdb
+└── python/
+    ├── model_preparation/
+    │   ├── 01_mutate_ssdna.py
+    │   ├── 02_generate_all_mutants.py
+    │   └── 03_extract_mutated_bases.py
+    ├── energy_calculations/
+    │   ├── 04_prepare_gamess_input.py
+    │   ├── 05_calculate_camm.py
+    │   ├── 06_calculate_das.py
+    │   └── external/
+    │       └── das_dispersion_core.py
+    └── visualization/
+        ├── 07_plot_dtss_heatmaps.py
+        ├── 08_plot_das_camm_components.py
+        └── 09_plot_dtss_sequence_logos.py</code></pre>
+
+        <p class="repo-note">
+          The <code>figures</code> folder contains the final figures used on this portfolio page.
+          The <code>structures</code> folder contains representative substrate and transition-state PDB files.
+          Some scripts require external software such as PyMOL, GAMESS, Open Babel and the
+          <code>pymolecule</code> module.
+        </p>
       </section>
 
       <section class="project-section" aria-labelledby="scripts-title">
         <p class="eyebrow">Python scripts</p>
         <h2 id="scripts-title">Analysis scripts</h2>
         <p class="section-lead">
-          The analysis workflow was organized into separate Python scripts for processing data, calculating DTSS values, generating figures and comparing sequence-dependent trends.
+          The scripts below represent the main computational workflow used in the project:
+          generating DNA variants, extracting nucleobases, calculating CAMM and Das components,
+          and visualizing DTSS-based sequence effects.
         </p>
 
         <div class="section-actions">
@@ -375,39 +439,63 @@
 
         <div class="script-grid">
           <article class="script-card">
-            <h3>med_analysis.py</h3>
-            <p>Reads interaction energy data, combines CAMM and dispersion components, and saves MED values.</p>
+            <span class="script-tag">Model preparation</span>
+            <h3>01_mutate_ssdna.py</h3>
+            <p>Creates a custom PyMOL command for single-base mutation in single-stranded DNA models.</p>
           </article>
 
           <article class="script-card">
-            <h3>dtss.py</h3>
-            <p>Calculates DTSS as the difference between transition-state and substrate interaction energies.</p>
-            <code>DTSS = MED(TS) − MED(S)</code>
+            <span class="script-tag">Model preparation</span>
+            <h3>02_generate_all_mutants.py</h3>
+            <p>Generates A-DNA and B-DNA single-nucleotide variants around the central reactive cytosine.</p>
           </article>
 
           <article class="script-card">
-            <h3>heatmaps.py</h3>
-            <p>Generates MED and DTSS heatmaps for C and 5mC in A-DNA and B-DNA models.</p>
+            <span class="script-tag">Model preparation</span>
+            <h3>03_extract_mutated_bases.py</h3>
+            <p>Extracts mutated nucleobases and prepares raw and hydrogen-completed fragments for further calculations.</p>
           </article>
 
           <article class="script-card">
-            <h3>profiles.py</h3>
-            <p>Plots interaction energy profiles across nucleotide positions relative to the deamination site.</p>
+            <span class="script-tag">Energy calculations</span>
+            <h3>04_prepare_gamess_input.py</h3>
+            <p>Generates GAMESS input files used for CAMM electrostatic calculations.</p>
           </article>
 
           <article class="script-card">
-            <h3>export_figures.py</h3>
-            <p>Exports final figures in consistent resolution and format for the thesis and portfolio page.</p>
+            <span class="script-tag">Energy calculations</span>
+            <h3>05_calculate_camm.py</h3>
+            <p>Calculates CAMM electrostatic interaction energies from GAMESS output files.</p>
           </article>
 
           <article class="script-card">
-            <h3>compare_ADNA_BDNA.py</h3>
-            <p>Compares energetic trends between A-DNA and B-DNA conformational frameworks.</p>
+            <span class="script-tag">Energy calculations</span>
+            <h3>06_calculate_das.py</h3>
+            <p>Calculates dispersion interaction energies using the Das method.</p>
+          </article>
+
+          <article class="script-card script-card-external">
+            <span class="script-tag">External helper</span>
+            <h3>das_dispersion_core.py</h3>
+            <p>Helper module used for Das dispersion calculations. Kept separately because it is an external calculation routine.</p>
           </article>
 
           <article class="script-card">
-            <h3>interaction_components.py</h3>
-            <p>Analyzes CAMM, dispersion and MED contributions to explain the physical origin of interactions.</p>
+            <span class="script-tag">Visualization</span>
+            <h3>07_plot_dtss_heatmaps.py</h3>
+            <p>Creates DTSS heatmaps comparing A-DNA, B-DNA, cytosine and 5-methylcytosine systems.</p>
+          </article>
+
+          <article class="script-card">
+            <span class="script-tag">Visualization</span>
+            <h3>08_plot_das_camm_components.py</h3>
+            <p>Visualizes CAMM and Das contributions for the most influential nucleotide positions.</p>
+          </article>
+
+          <article class="script-card">
+            <span class="script-tag">Visualization</span>
+            <h3>09_plot_dtss_sequence_logos.py</h3>
+            <p>Creates DTSS-based sequence logos showing favorable and unfavorable local sequence contexts.</p>
           </article>
         </div>
       </section>
@@ -492,5 +580,97 @@
       </section>
     </main>
   </div>
+
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Close image preview">×</button>
+      <img id="lightbox-image" src="" alt="" />
+    </div>
+
+    <script>
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.querySelector(".lightbox-close");
+
+      document.querySelectorAll(".result-card img").forEach((image) => {
+        image.addEventListener("click", () => {
+          lightboxImage.src = image.src;
+          lightboxImage.alt = image.alt;
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+          document.body.classList.add("lightbox-open");
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+        document.body.classList.remove("lightbox-open");
+      }
+
+      closeButton.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
+
+      const structureViewers = [
+        {
+          elementId: "viewer-c-substrate",
+          file: "structures/C_S_B.pdb"
+        },
+        {
+          elementId: "viewer-5mc-substrate",
+          file: "structures/5mC_S_B.pdb"
+        }
+      ];
+
+      function loadPdbViewer({ elementId, file }) {
+        const viewerElement = document.getElementById(elementId);
+
+        if (!viewerElement || !window.$3Dmol) {
+          return;
+        }
+
+        const viewer = $3Dmol.createViewer(viewerElement, {
+          backgroundColor: "#0b1419"
+        });
+
+        fetch(file)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("PDB file not found");
+            }
+            return response.text();
+          })
+          .then((pdbData) => {
+            viewer.addModel(pdbData, "pdb");
+
+            viewer.setStyle({}, {
+              stick: {
+                radius: 0.16
+              }
+            });
+
+            viewer.zoomTo();
+            viewer.render();
+          })
+          .catch(() => {
+            viewerElement.innerHTML =
+              `<div class='viewer-error'>PDB structure could not be loaded. Check the file path: ${file}</div>`;
+          });
+      }
+
+      structureViewers.forEach(loadPdbViewer);
+    </script>
 </body>
 </html>
