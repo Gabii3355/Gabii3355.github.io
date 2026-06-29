@@ -3,11 +3,15 @@
   gap: 28px;
 }
 
+/* =========================
+   Hero
+   ========================= */
+
 .project-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
   gap: 32px;
-  align-items: stretch;
+  align-items: start;
   padding: 44px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -35,15 +39,16 @@
 }
 
 .project-hero h1 {
-  max-width: 880px;
-  font-size: clamp(2rem, 4.4vw, 4.2rem);
+  max-width: 820px;
+  margin-bottom: 18px;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
 }
 
 .project-hero p,
 .project-section p,
-.project-section li,
-.research-card p,
-.methodology-card p {
+.project-section li {
   color: var(--muted);
   line-height: 1.75;
 }
@@ -71,32 +76,35 @@
 }
 
 .hero-figure {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  justify-self: center;
+  align-self: start;
+  width: fit-content;
+  max-width: 420px;
+  height: auto;
   margin: 0;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 18px;
+  border: 1px solid rgba(104, 214, 193, 0.25);
   border-radius: 26px;
-  background:
-    linear-gradient(135deg, rgba(104, 214, 193, 0.08), rgba(154, 201, 255, 0.06)),
-    rgba(255, 255, 255, 0.04);
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  overflow: visible;
 }
 
 .hero-figure img {
-  width: 100%;
-  max-height: 420px;
+  display: block;
+  width: 340px;
+  max-width: 100%;
+  height: auto;
+  max-height: 470px;
   object-fit: contain;
-  padding: 24px;
 }
 
-.hero-figure figcaption {
-  padding: 16px 20px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
+/* =========================
+   Shared section styles
+   ========================= */
 
 .project-section {
   padding: 32px;
@@ -111,33 +119,33 @@
   font-size: clamp(1.8rem, 3.2vw, 3rem);
 }
 
+.section-lead {
+  max-width: 860px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+/* =========================
+   Research question
+   ========================= */
+
 .research-section > p {
   max-width: 850px;
 }
 
-.research-grid,
-.methodology-grid,
-.tech-grid {
+.research-grid {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
   margin-top: 26px;
 }
 
-.research-grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.research-card,
-.methodology-card,
-.tech-card {
+.research-card {
+  padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.045);
-}
-
-.research-card,
-.methodology-card {
-  padding: 24px;
 }
 
 .research-card span,
@@ -150,10 +158,18 @@
   letter-spacing: 0.1rem;
 }
 
-.research-card h3,
-.methodology-card h3 {
+.research-card h3 {
   font-size: 1.2rem;
 }
+
+.research-card p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* =========================
+   Workflow
+   ========================= */
 
 .workflow-list {
   display: grid;
@@ -185,17 +201,37 @@
   letter-spacing: 0.08rem;
 }
 
+/* =========================
+   Methodology
+   ========================= */
+
 .methodology-grid {
+  display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
 }
 
 .methodology-card {
   position: relative;
   min-height: 230px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.methodology-card h3 {
+  font-size: 1.2rem;
+}
+
+.methodology-card p {
+  color: var(--muted);
+  line-height: 1.75;
 }
 
 .methodology-card:not(:last-child)::after {
-  content: "↓";
+  content: "→";
   position: absolute;
   right: -15px;
   top: 50%;
@@ -212,22 +248,40 @@
   font-weight: 900;
 }
 
+/* =========================
+   Technologies and tooltips
+   ========================= */
+
 .tech-grid {
+  display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+  overflow: visible;
 }
 
 .tech-card {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 86px;
   padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
   transition: 0.2s ease;
+  overflow: visible;
 }
 
 .tech-card:hover {
   transform: translateY(-3px);
   border-color: rgba(104, 214, 193, 0.38);
+}
+
+.tech-card:focus {
+  outline: 2px solid rgba(104, 214, 193, 0.7);
+  outline-offset: 4px;
 }
 
 .tech-card span {
@@ -244,189 +298,29 @@
   font-size: 1rem;
 }
 
-@media (max-width: 1080px) {
-  .project-hero,
-  .research-grid,
-  .methodology-grid,
-  .tech-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .methodology-card:not(:last-child)::after {
-    display: none;
-  }
-}
-
-@media (max-width: 720px) {
-  .project-hero,
-  .research-grid,
-  .methodology-grid,
-  .tech-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-figure img {
-    min-height: 260px;
-    padding: 18px;
-  }
-}
-
-@media (max-width: 620px) {
-  .project-hero,
-  .project-section,
-  .research-card,
-  .methodology-card {
-    padding: 22px;
-  }
-
-  .workflow-list li {
-    padding-left: 16px;
-  }
-
-  .workflow-list li::before {
-    position: static;
-    display: block;
-    transform: none;
-    margin-bottom: 6px;
-  }
-}
-.tech-grid {
-  overflow: visible;
-}
-
 .tooltip-card {
-  position: relative;
-  cursor: default;
-  overflow: visible;
+  cursor: pointer;
 }
 
-.tooltip-card:focus {
-  outline: 2px solid rgba(104, 214, 193, 0.7);
-  outline-offset: 4px;
-}
-
-.tech-tooltip {
+.tooltip-card .tech-tooltip {
   position: absolute;
   left: 50%;
   bottom: calc(100% + 14px);
-  z-index: 20;
+  z-index: 100;
+  display: none;
   width: min(260px, 80vw);
   margin: 0;
   padding: 14px 16px;
   border: 1px solid rgba(104, 214, 193, 0.28);
   border-radius: 16px;
   color: var(--text);
-  background: rgba(8, 16, 20, 0.96);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
-  font-size: 0.88rem;
-  line-height: 1.5;
-  text-align: left;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, 10px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-  pointer-events: none;
-}
-
-.tech-tooltip::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  width: 12px;
-  height: 12px;
-  background: rgba(8, 16, 20, 0.96);
-  border-right: 1px solid rgba(104, 214, 193, 0.28);
-  border-bottom: 1px solid rgba(104, 214, 193, 0.28);
-  transform: translateX(-50%) rotate(45deg);
-}
-
-.tooltip-card:hover .tech-tooltip,
-.tooltip-card:focus .tech-tooltip,
-.tooltip-card:focus-within .tech-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-}
-/* Smaller hero title */
-.project-hero h1 {
-  font-size: clamp(2rem, 4vw, 4rem) !important;
-  line-height: 1.02;
-  max-width: 820px;
-}
-
-/* Do not stretch the right DNA card */
-.project-hero {
-  align-items: start;
-}
-
-/* Frame fitted directly around the DNA image */
-.hero-figure {
-  width: fit-content;
-  max-width: 420px;
-  height: auto;
-  min-height: 0 !important;
-  justify-self: center;
-  align-self: start;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  margin: 0;
-  padding: 18px;
-
-  border: 1px solid rgba(104, 214, 193, 0.25);
-  border-radius: 26px;
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
-  overflow: visible;
-}
-
-/* DNA image size */
-.hero-figure img {
-  width: 340px;
-  max-width: 100%;
-  height: auto;
-  max-height: 470px;
-  object-fit: contain;
-  padding: 0 !important;
-  display: block;
-}
-/* Tools tooltip fix */
-
-.tech-card {
-  position: relative;
-  overflow: visible;
-}
-
-.tooltip-card {
-  position: relative;
-  cursor: pointer;
-}
-
-.tooltip-card .tech-tooltip {
-  display: none !important;
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 14px);
-  z-index: 100;
-
-  width: 260px;
-  margin: 0;
-  padding: 14px 16px;
-
-  border: 1px solid rgba(104, 214, 193, 0.28);
-  border-radius: 16px;
   background: rgba(8, 16, 20, 0.97);
-  color: var(--text);
-
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
   font-size: 0.88rem;
   line-height: 1.5;
   text-align: left;
-
   transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .tooltip-card .tech-tooltip::after {
@@ -434,34 +328,37 @@
   position: absolute;
   left: 50%;
   top: 100%;
-
   width: 12px;
   height: 12px;
-
   background: rgba(8, 16, 20, 0.97);
   border-right: 1px solid rgba(104, 214, 193, 0.28);
   border-bottom: 1px solid rgba(104, 214, 193, 0.28);
-
   transform: translateX(-50%) rotate(45deg);
 }
 
 .tooltip-card:hover .tech-tooltip,
 .tooltip-card:focus .tech-tooltip,
 .tooltip-card:focus-within .tech-tooltip {
-  display: block !important;
+  display: block;
 }
-/* Results section */
 
-.section-lead {
-  max-width: 860px;
-  color: var(--muted);
-  line-height: 1.75;
-  font-size: 1.02rem;
-}
+/* =========================
+   Results
+   ========================= */
 
 .results-grid {
   display: grid;
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.results-grid-main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.results-grid-vertical {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
   margin-top: 28px;
 }
@@ -476,11 +373,33 @@
 }
 
 .result-card img {
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
   object-fit: contain;
-  padding: 18px;
   background: rgba(255, 255, 255, 0.03);
+}
+
+.result-card-wide img {
+  aspect-ratio: 16 / 10;
+  padding: 18px;
+}
+
+.result-card-span {
+  grid-column: 1 / -1;
+}
+
+.result-card-span img {
+  max-height: 540px;
+}
+
+.result-card-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-card-vertical img {
+  height: 380px;
+  padding: 18px;
 }
 
 .result-card figcaption {
@@ -495,7 +414,9 @@
   color: var(--text);
 }
 
-/* Expandable findings */
+/* =========================
+   Key findings
+   ========================= */
 
 .findings-list {
   display: grid;
@@ -549,15 +470,17 @@
   line-height: 1.7;
 }
 
-/* Repository tree */
+/* =========================
+   Repository
+   ========================= */
 
 .repo-tree {
   margin-top: 26px;
   padding: 24px;
   border: 1px solid var(--line);
   border-radius: 24px;
-  background: rgba(4, 10, 13, 0.72);
   color: #d9f8f2;
+  background: rgba(4, 10, 13, 0.72);
   overflow-x: auto;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
 }
@@ -568,7 +491,9 @@
   line-height: 1.7;
 }
 
-/* Python scripts */
+/* =========================
+   Python scripts
+   ========================= */
 
 .script-grid {
   display: grid;
@@ -602,7 +527,9 @@
   background: rgba(232, 209, 125, 0.08);
 }
 
-/* Static interactive cards */
+/* =========================
+   Interactive preview
+   ========================= */
 
 .interactive-grid {
   display: grid;
@@ -633,8 +560,8 @@
 
 .interactive-card strong {
   display: block;
-  color: var(--text);
   margin-bottom: 8px;
+  color: var(--text);
 }
 
 .interactive-card p {
@@ -650,8 +577,8 @@
   padding: 14px 16px;
   border: 1px solid rgba(104, 214, 193, 0.28);
   border-radius: 16px;
-  background: rgba(8, 16, 20, 0.97);
   color: var(--text);
+  background: rgba(8, 16, 20, 0.97);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
   opacity: 0;
   visibility: hidden;
@@ -671,7 +598,9 @@
   transform: translate(-50%, 0);
 }
 
-/* Challenges */
+/* =========================
+   Challenges
+   ========================= */
 
 .challenge-grid {
   display: grid;
@@ -699,7 +628,9 @@
   line-height: 1.65;
 }
 
-/* What I learned */
+/* =========================
+   What I learned
+   ========================= */
 
 .learned-grid {
   display: grid;
@@ -712,15 +643,35 @@
   padding: 18px 20px;
   border: 1px solid rgba(104, 214, 193, 0.22);
   border-radius: 18px;
-  background: rgba(104, 214, 193, 0.075);
   color: var(--text);
+  background: rgba(104, 214, 193, 0.075);
   font-weight: 800;
 }
 
-/* Responsive */
+/* =========================
+   Responsive layout
+   ========================= */
+
+@media (max-width: 1080px) {
+  .project-hero,
+  .research-grid,
+  .methodology-grid,
+  .tech-grid,
+  .results-grid-main,
+  .results-grid-vertical {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .methodology-card:not(:last-child)::after {
+    display: none;
+  }
+
+  .result-card-span {
+    grid-column: auto;
+  }
+}
 
 @media (max-width: 900px) {
-  .results-grid,
   .script-grid,
   .interactive-grid,
   .challenge-grid,
@@ -735,5 +686,44 @@
 
   .interactive-card:hover .data-popup {
     transform: translate(0, 0);
+  }
+}
+
+@media (max-width: 720px) {
+  .project-hero,
+  .research-grid,
+  .methodology-grid,
+  .tech-grid,
+  .results-grid-main,
+  .results-grid-vertical {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-figure img {
+    width: 280px;
+  }
+
+  .result-card-vertical img {
+    height: 340px;
+  }
+}
+
+@media (max-width: 620px) {
+  .project-hero,
+  .project-section,
+  .research-card,
+  .methodology-card {
+    padding: 22px;
+  }
+
+  .workflow-list li {
+    padding-left: 16px;
+  }
+
+  .workflow-list li::before {
+    position: static;
+    display: block;
+    margin-bottom: 6px;
+    transform: none;
   }
 }
