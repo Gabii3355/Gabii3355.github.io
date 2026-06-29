@@ -51,9 +51,27 @@
           </div>
         </div>
 
-        <figure class="hero-figure">
-          <img src="figures/DNA-scheme.png" alt="Single-stranded DNA scheme with a local sequence mutation near the cytosine deamination site" />
-        </figure>
+        <div class="hero-visuals mutation-hero-carousel" aria-label="DNA mutation image carousel">
+          <figure class="hero-figure carousel-figure">
+            <p class="viewer-label">A-DNA</p>
+            <img id="adna-carousel-image" src="figures/ADNA_5mC_S_pos(-1)_G.png" alt="A-DNA mutation preview" />
+            <figcaption id="adna-carousel-caption" class="carousel-caption">ADNA_5mC_S_pos(-1)_G.png</figcaption>
+          </figure>
+
+          <figure class="hero-figure carousel-figure">
+            <p class="viewer-label">B-DNA</p>
+            <img id="bdna-carousel-image" src="figures/BDNA_5mC_S_pos(-1)_G.png" alt="B-DNA mutation preview" />
+            <figcaption id="bdna-carousel-caption" class="carousel-caption">BDNA_5mC_S_pos(-1)_G.png</figcaption>
+          </figure>
+
+          <p class="carousel-caption-note">Captions show the exact file names used in the figures folder.</p>
+
+          <div class="carousel-controls" aria-label="Mutation gallery controls">
+            <button type="button" id="prev-mutation-slide">Previous</button>
+            <span id="mutation-slide-counter" class="slide-counter">1 / 4</span>
+            <button type="button" id="next-mutation-slide">Next</button>
+          </div>
+        </div>
       </section>
 
       <section class="project-section research-section" aria-labelledby="research-question-title">
@@ -384,12 +402,16 @@
 ├── requirements.txt
 ├── figures/
 │   ├── DNA-scheme.png
+│   ├── DNA-scheme-ADNA.png
 │   ├── MED-heatmap.png
 │   ├── DTSS-heatmap.png
 │   ├── MED-profile.png
 │   ├── CAMM-Das-comparison.png
 │   ├── ADNA-BDNA-comparison.png
-│   └── favorable-sequence-context.png
+│   ├── favorable-sequence-context.png
+│   ├── ADNA_5mC_S_pos(-1)_G.png
+│   ├── BDNA_5mC_S_pos(-1)_G.png
+│   └── additional mutation snapshots
 ├── structures/
 │   ├── C_S_B.pdb
 │   ├── C_TS_B.pdb
@@ -416,7 +438,7 @@
         └── 09_plot_dtss_sequence_logos.py</code></pre>
 
         <p class="repo-note">
-          The <code>figures</code> folder contains the final figures used on this portfolio page.
+          The <code>figures</code> folder contains the final figures and mutation snapshots used on this portfolio page.
           The <code>structures</code> folder contains representative substrate and transition-state PDB files.
           Some scripts require external software such as PyMOL, GAMESS, Open Babel and the
           <code>pymolecule</code> module.
@@ -589,6 +611,105 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        const mutationSlides = [
+          {
+            adna: "figures/ADNA_5mC_S_pos(-1)_G.png",
+            bdna: "figures/BDNA_5mC_S_pos(-1)_G.png"
+          },
+          {
+            adna: "figures/ADNA_5mC_S_pos(-1)_A.png",
+            bdna: "figures/BDNA_5mC_S_pos(-1)_A.png"
+          },
+          {
+            adna: "figures/ADNA_5mC_S_pos(-1)_C.png",
+            bdna: "figures/BDNA_5mC_S_pos(-1)_C.png"
+          },
+          {
+            adna: "figures/ADNA_5mC_S_pos(-1)_T.png",
+            bdna: "figures/BDNA_5mC_S_pos(-1)_T.png"
+          }
+        ];
+
+        let currentMutationSlide = 0;
+        let mutationIntervalId;
+
+        const adnaCarouselImage = document.getElementById("adna-carousel-image");
+        const bdnaCarouselImage = document.getElementById("bdna-carousel-image");
+        const adnaCarouselCaption = document.getElementById("adna-carousel-caption");
+        const bdnaCarouselCaption = document.getElementById("bdna-carousel-caption");
+        const mutationSlideCounter = document.getElementById("mutation-slide-counter");
+        const prevMutationButton = document.getElementById("prev-mutation-slide");
+        const nextMutationButton = document.getElementById("next-mutation-slide");
+
+        function fileNameFromPath(filePath) {
+          return decodeURIComponent(filePath.split("/").pop());
+        }
+
+        function setImageWithFallback(imageElement, filePath) {
+          if (!imageElement) {
+            return;
+          }
+
+          imageElement.classList.remove("image-load-error");
+          imageElement.src = filePath;
+          imageElement.alt = fileNameFromPath(filePath);
+
+          imageElement.onerror = () => {
+            imageElement.classList.add("image-load-error");
+            imageElement.alt = `Image not found: ${fileNameFromPath(filePath)}`;
+          };
+        }
+
+        function showMutationSlide(index) {
+          if (!mutationSlides.length) {
+            return;
+          }
+
+          const slide = mutationSlides[index];
+
+          setImageWithFallback(adnaCarouselImage, slide.adna);
+          setImageWithFallback(bdnaCarouselImage, slide.bdna);
+
+          if (adnaCarouselCaption) {
+            adnaCarouselCaption.textContent = fileNameFromPath(slide.adna);
+          }
+
+          if (bdnaCarouselCaption) {
+            bdnaCarouselCaption.textContent = fileNameFromPath(slide.bdna);
+          }
+
+          if (mutationSlideCounter) {
+            mutationSlideCounter.textContent = `${index + 1} / ${mutationSlides.length}`;
+          }
+        }
+
+        function goToMutationSlide(direction) {
+          currentMutationSlide = (currentMutationSlide + direction + mutationSlides.length) % mutationSlides.length;
+          showMutationSlide(currentMutationSlide);
+        }
+
+        function restartMutationAutoplay() {
+          clearInterval(mutationIntervalId);
+          mutationIntervalId = setInterval(() => {
+            goToMutationSlide(1);
+          }, 4000);
+        }
+
+        if (prevMutationButton && nextMutationButton) {
+          prevMutationButton.addEventListener("click", () => {
+            goToMutationSlide(-1);
+            restartMutationAutoplay();
+          });
+
+          nextMutationButton.addEventListener("click", () => {
+            goToMutationSlide(1);
+            restartMutationAutoplay();
+          });
+        }
+
+        showMutationSlide(currentMutationSlide);
+        restartMutationAutoplay();
+
         const lightbox = document.getElementById("image-lightbox");
         const lightboxImage = document.getElementById("lightbox-image");
         const closeButton = document.querySelector(".lightbox-close");
