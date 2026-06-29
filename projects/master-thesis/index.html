@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DNA Deamination Project | Gabriela Bieda</title>
+  <title>Master's Thesis | Gabriela Bieda</title>
   <link rel="stylesheet" href="../../css/main.css" />
   <link rel="stylesheet" href="masters.css" />
 </head>
@@ -25,46 +25,64 @@
         <a class="nav-link" href="../../index.html#contact">Contact</a>
       </nav>
     </header>
+<main class="project-layout">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-content">
+          <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
+          <p class="eyebrow">Project 01 · Master's thesis</p>
+          <h1 id="project-title">Sequence-dependent spontaneous deamination of cytosine and 5-methylcytosine in DNA</h1>
+          <p class="lead">
+            Computational chemistry project investigating how the local DNA sequence affects
+            the hydrolytic deamination of cytosine and 5-methylcytosine using MED and DTSS calculations.
+          </p>
+          <p class="hero-note">
+            The project connects molecular modeling, quantum-chemical interaction analysis and Python-based
+            data visualization to identify local sequence motifs that may favor deamination.
+          </p>
+          <div class="method-badge-row" aria-label="Main project methods">
+            <span>MED</span>
+            <span>DTSS</span>
+            <span>CAMM</span>
+            <span>Das dispersion</span>
+            <span>A-DNA vs B-DNA</span>
+          </div>
+        </div>
 
-    <main class="project-layout">
-      <section class="project-hero">
-        <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
-        <p class="eyebrow">Project 01 · Master's thesis</p>
-        <h1>How does DNA sequence affect cytosine deamination?</h1>
-        <p class="lead">
-          Computational chemistry project investigating how neighboring DNA bases influence
-          cytosine and 5-methylcytosine deamination using MED interaction energies and DTSS analysis.
+        <figure class="hero-figure">
+          <img src="figures/DNA-scheme.png" alt="Single-stranded DNA scheme with a local sequence mutation near the cytosine deamination site" />
+          <figcaption>Single-stranded DNA model used to illustrate local sequence context around the reactive site.</figcaption>
+        </figure>
+      </section>
+
+      <section class="project-section research-section" aria-labelledby="research-question-title">
+        <p class="eyebrow">Research question</p>
+        <h2 id="research-question-title">Can neighboring DNA bases influence the activation barrier of cytosine deamination?</h2>
+        <p>
+          Instead of describing the whole reaction mechanism, this project focuses on one practical question:
+          whether the local nucleotide environment can preferentially stabilize the transition state relative to the substrate.
         </p>
-        <div class="method-badge-row" aria-label="Main project methods">
-          <span>MED</span>
-          <span>DTSS</span>
-          <span>CAMM</span>
-          <span>Das dispersion</span>
-          <span>A-DNA vs B-DNA</span>
-        </div>
-        <div class="project-actions">
-          <a class="button primary" href="README.md">Open README</a>
-          <a class="button secondary" href="scripts/">View scripts</a>
+
+        <div class="research-grid" aria-label="Research objectives">
+          <article class="research-card">
+            <span>01</span>
+            <h3>Analyze A-DNA and B-DNA</h3>
+            <p>Compare the same sequence variants in two DNA geometries to test the influence of spatial arrangement.</p>
+          </article>
+          <article class="research-card">
+            <span>02</span>
+            <h3>Compare C and 5mC</h3>
+            <p>Evaluate cytosine and 5-methylcytosine deamination models using the same computational strategy.</p>
+          </article>
+          <article class="research-card">
+            <span>03</span>
+            <h3>Identify favorable sequence motifs</h3>
+            <p>Find neighboring nucleotides that stabilize the transition state and may lower the activation barrier.</p>
+          </article>
         </div>
       </section>
 
-      <section class="project-meta-grid" aria-label="Project summary">
-        <article class="project-meta-card">
-          <span>Methods</span>
-          <p>MED, CAMM, Das dispersion, DTSS</p>
-        </article>
-        <article class="project-meta-card">
-          <span>Tools</span>
-          <p>Python, GAMESS, X3DNA DSSR, Git, Linux</p>
-        </article>
-        <article class="project-meta-card">
-          <span>Focus</span>
-          <p>DNA sequence context, A-DNA vs B-DNA, C vs 5mC</p>
-        </article>
-      </section>
-
-      <section class="project-section">
-        <h2>Workflow</h2>
+      <section class="project-section" aria-labelledby="workflow-title">
+        <h2 id="workflow-title">Workflow</h2>
         <ol class="workflow-list">
           <li>Select substrate and transition-state models from literature.</li>
           <li>Generate A-DNA and B-DNA structural models.</li>
@@ -75,21 +93,62 @@
         </ol>
       </section>
 
-      <section class="project-section">
-        <h2>Planned figures</h2>
-        <div class="figure-grid">
-          <article class="figure-card">
-            <div class="figure-placeholder">MED heatmap</div>
+      <section class="project-section" aria-labelledby="methodology-title">
+        <p class="eyebrow">Methodology</p>
+        <h2 id="methodology-title">From molecular models to sequence-dependent energy trends</h2>
+
+        <div class="methodology-grid">
+          <article class="methodology-card">
+            <span class="step-number">01</span>
+            <h3>Literature</h3>
+            <p>Selected substrate and transition-state models from Labet et al.</p>
           </article>
-          <article class="figure-card">
-            <div class="figure-placeholder">DTSS heatmap</div>
+
+          <article class="methodology-card">
+            <span class="step-number">02</span>
+            <h3>DNA preparation</h3>
+            <p>Generated A-DNA and B-DNA structures and prepared local single-nucleotide variants.</p>
           </article>
-          <article class="figure-card">
-            <div class="figure-placeholder">CAMM vs Das components</div>
+
+          <article class="methodology-card">
+            <span class="step-number">03</span>
+            <h3>Quantum calculations</h3>
+            <p>Calculated CAMM electrostatic contributions for interactions with neighboring bases.</p>
           </article>
-          <article class="figure-card">
-            <div class="figure-placeholder">Workflow diagram</div>
+
+          <article class="methodology-card">
+            <span class="step-number">04</span>
+            <h3>Python processing</h3>
+            <p>Combined MED components and calculated DTSS values as MED(TS) − MED(S).</p>
           </article>
+
+          <article class="methodology-card">
+            <span class="step-number">05</span>
+            <h3>Analysis</h3>
+            <p>Created heatmaps, bar plots and interaction profiles to compare sequence effects.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="technologies-title">
+        <p class="eyebrow">Technologies</p>
+        <h2 id="technologies-title">Tools used in the project</h2>
+        <p>
+          The project combines computational chemistry software with Python-based data analysis
+          and reproducible file organization.
+        </p>
+
+        <div class="tech-grid" aria-label="Technologies used">
+          <article class="tech-card"><span>🐍</span><strong>Python</strong></article>
+          <article class="tech-card"><span>🔢</span><strong>NumPy</strong></article>
+          <article class="tech-card"><span>📊</span><strong>pandas</strong></article>
+          <article class="tech-card"><span>📈</span><strong>Matplotlib</strong></article>
+          <article class="tech-card"><span>📓</span><strong>Jupyter</strong></article>
+          <article class="tech-card"><span>⚛️</span><strong>GAMESS</strong></article>
+          <article class="tech-card"><span>🧲</span><strong>CAMM</strong></article>
+          <article class="tech-card"><span>🧬</span><strong>X3DNA DSSR</strong></article>
+          <article class="tech-card"><span>🐧</span><strong>Linux</strong></article>
+          <article class="tech-card"><span>🌿</span><strong>Git</strong></article>
         </div>
       </section>
     </main>
