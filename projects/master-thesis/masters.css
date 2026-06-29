@@ -348,3 +348,48 @@
   visibility: visible;
   transform: translate(-50%, 0);
 }
+/* Smaller hero title */
+.project-hero h1 {
+  font-size: clamp(2rem, 4vw, 4rem) !important;
+  line-height: 1.02;
+  max-width: 820px;
+}
+
+/* Do not stretch the right DNA card */
+.project-hero {
+  align-items: start;
+}
+
+/* Frame fitted directly around the DNA image */
+.hero-figure {
+  width: fit-content;
+  max-width: 420px;
+  height: auto;
+  min-height: 0 !important;
+  justify-self: center;
+  align-self: start;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 18px;
+
+  border: 1px solid rgba(104, 214, 193, 0.25);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  overflow: visible;
+}
+
+/* DNA image size */
+.hero-figure img {
+  width: 340px;
+  max-width: 100%;
+  height: auto;
+  max-height: 470px;
+  object-fit: contain;
+  padding: 0 !important;
+  display: block;
+}
