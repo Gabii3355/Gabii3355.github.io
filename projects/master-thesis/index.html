@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DNA Deamination Project | Gabriela Bieda</title>
+  <link rel="stylesheet" href="../../css/main.css" />
+  <link rel="stylesheet" href="masters.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <a class="brand" href="../../index.html#home" aria-label="Go to home page">
+        <span class="brand-mark">GB</span>
+        <span>
+          <strong>Gabriela Bieda</strong>
+          <small>Bioinformatics · Chemistry · IT</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link" href="../../index.html#home">Home</a>
+        <a class="nav-link" href="../../index.html#cv">CV</a>
+        <a class="nav-link" href="../../index.html#portfolio">Portfolio</a>
+        <a class="nav-link" href="../../index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="project-layout">
+      <section class="project-hero">
+        <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
+        <p class="eyebrow">Project 01 · Master's thesis</p>
+        <h1>How does DNA sequence affect cytosine deamination?</h1>
+        <p class="lead">
+          Computational chemistry project investigating how neighboring DNA bases influence
+          cytosine and 5-methylcytosine deamination using MED interaction energies and DTSS analysis.
+        </p>
+        <div class="method-badge-row" aria-label="Main project methods">
+          <span>MED</span>
+          <span>DTSS</span>
+          <span>CAMM</span>
+          <span>Das dispersion</span>
+          <span>A-DNA vs B-DNA</span>
+        </div>
+        <div class="project-actions">
+          <a class="button primary" href="README.md">Open README</a>
+          <a class="button secondary" href="scripts/">View scripts</a>
+        </div>
+      </section>
+
+      <section class="project-meta-grid" aria-label="Project summary">
+        <article class="project-meta-card">
+          <span>Methods</span>
+          <p>MED, CAMM, Das dispersion, DTSS</p>
+        </article>
+        <article class="project-meta-card">
+          <span>Tools</span>
+          <p>Python, GAMESS, X3DNA DSSR, Git, Linux</p>
+        </article>
+        <article class="project-meta-card">
+          <span>Focus</span>
+          <p>DNA sequence context, A-DNA vs B-DNA, C vs 5mC</p>
+        </article>
+      </section>
+
+      <section class="project-section">
+        <h2>Workflow</h2>
+        <ol class="workflow-list">
+          <li>Select substrate and transition-state models from literature.</li>
+          <li>Generate A-DNA and B-DNA structural models.</li>
+          <li>Create single-nucleotide variants around the reactive cytosine.</li>
+          <li>Calculate CAMM electrostatics and Das dispersion components.</li>
+          <li>Combine components into MED interaction energies.</li>
+          <li>Calculate DTSS values and visualize sequence-dependent trends.</li>
+        </ol>
+      </section>
+
+      <section class="project-section">
+        <h2>Planned figures</h2>
+        <div class="figure-grid">
+          <article class="figure-card">
+            <div class="figure-placeholder">MED heatmap</div>
+          </article>
+          <article class="figure-card">
+            <div class="figure-placeholder">DTSS heatmap</div>
+          </article>
+          <article class="figure-card">
+            <div class="figure-placeholder">CAMM vs Das components</div>
+          </article>
+          <article class="figure-card">
+            <div class="figure-placeholder">Workflow diagram</div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

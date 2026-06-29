@@ -1,0 +1,136 @@
+.project-layout {
+  display: grid;
+  gap: 28px;
+}
+
+.project-hero {
+  padding: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 90% 10%, rgba(104,214,193,.16), transparent 16rem),
+    rgba(17, 31, 39, 0.78);
+  box-shadow: var(--shadow);
+}
+
+.project-hero h1 {
+  font-size: clamp(2.4rem, 6vw, 5.6rem);
+}
+
+.project-hero p,
+.project-section p,
+.project-section li,
+.project-meta-card p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.back-link {
+  display: inline-flex;
+  margin-bottom: 32px;
+  color: var(--accent);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.project-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.project-meta-card,
+.project-section,
+.figure-card {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(17, 31, 39, 0.78);
+  box-shadow: var(--shadow);
+}
+
+.project-meta-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .12rem;
+  text-transform: uppercase;
+}
+
+.project-section h2 {
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+}
+
+.workflow-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.workflow-list li {
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 18px;
+  background: rgba(255,255,255,.045);
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.figure-placeholder {
+  display: grid;
+  min-height: 230px;
+  place-items: center;
+  border: 1px dashed rgba(154,201,255,.36);
+  border-radius: 22px;
+  color: var(--muted);
+  background: rgba(255,255,255,.035);
+  text-align: center;
+}
+
+.status-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 74px;
+  margin-top: 18px;
+  padding: 20px 30px;
+  border: 1px solid rgba(232,209,125,.28);
+  border-radius: 22px;
+  color: var(--chem);
+  background: rgba(232,209,125,.08);
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .14rem;
+}
+
+@media (max-width: 920px) {
+  .project-meta-grid,
+  .figure-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .project-hero,
+  .project-meta-card,
+  .project-section,
+  .figure-card {
+    padding: 22px;
+  }
+}

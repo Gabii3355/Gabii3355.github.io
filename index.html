@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriela Bieda | Bioinformatics Portfolio</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/portfolio.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Go to home section">
+        <span class="brand-mark">GB</span>
+        <span>
+          <strong>Gabriela Bieda</strong>
+          <small>Bioinformatics · Chemistry · IT</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#cv">CV</a>
+        <a class="nav-link" href="#portfolio">Portfolio</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="pages">
+      <section id="home" class="page home-page" aria-labelledby="home-title">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Code · Molecules · Data</p>
+            <h1 id="home-title">Welcome!</h1>
+            <p class="lead">
+              I am a bioinformatics MSc student fascinated by the point where chemistry,
+              biological data and computational tools meet. I enjoy turning complex molecular
+              problems into clear, reproducible insights.
+            </p>
+            <div class="tag-row" aria-label="Main interests">
+              <span>Bioinformatics</span>
+              <span>Molecular modeling</span>
+              <span>Machine learning</span>
+              <span>Computational chemistry</span>
+            </div>
+            <div class="hero-actions">
+              <a class="button primary" href="#portfolio">View projects</a>
+              <a class="button secondary" href="#cv">Open CV</a>
+            </div>
+          </div>
+
+          <figure class="photo-card hero-photo">
+            <img src="assets/gabriela-city-view.png" alt="Gabriela standing in front of a city view" />
+          </figure>
+        </div>
+
+        <section class="about-section split-section" aria-labelledby="about-title">
+          <figure class="photo-card lab-photo">
+            <img src="assets/gabriela-lab.png" alt="Gabriela working in a chemistry laboratory" />
+          </figure>
+          <div class="text-card">
+            <h2 id="about-title">Learn a bit about me</h2>
+            <p>
+              My background connects wet-lab chemistry with computational thinking. I like work
+              that requires both chemical intuition and structured analysis: from molecular
+              modeling and simulation outputs to Python-based data processing and machine learning.
+            </p>
+            <ul class="clean-list">
+              <li>Computational biology and bioinformatics</li>
+              <li>DNA sequence context and molecular mechanisms</li>
+              <li>Reproducible analysis using Python, Linux and Git</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="why-section split-section reverse" aria-labelledby="why-title">
+          <figure class="photo-card dna-photo">
+            <img src="assets/dna-helix.png" alt="DNA double helix illustration" />
+          </figure>
+          <div class="text-card accent-card">
+            <h2 id="why-title">Why Bioinformatics?</h2>
+            <p>
+              Bioinformatics lets me combine what I enjoy most: chemical intuition, algorithms
+              and careful analysis. I focus on molecular modeling and data-driven discovery by
+              building and validating models that help explain how molecules behave and interact.
+            </p>
+            <p>
+              My goal is to support smarter experiments and faster research by connecting
+              biological questions with reliable computational methods.
+            </p>
+          </div>
+        </section>
+
+        <section class="skills-strip" aria-label="Selected skills">
+          <article>
+            <span>01</span>
+            <h3>Programming</h3>
+            <p>Python, R, NumPy, pandas, scikit-learn, TensorFlow</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Modeling</h3>
+            <p>Molecular modeling, MD, docking, QM calculations, HPC workflows</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Scientific mindset</h3>
+            <p>Problem solving, reproducibility, biological interpretation</p>
+          </article>
+        </section>
+      </section>
+
+      <section id="cv" class="page" aria-labelledby="cv-title">
+        <div class="page-heading">
+          <p class="eyebrow">Curriculum vitae</p>
+          <h1 id="cv-title">CV</h1>
+          <p>
+            Here you can view or download my CV in PDF format.
+          </p>
+          <a class="button primary" href="assets/Gabriela_Bieda_CV.pdf" download>Download CV</a>
+        </div>
+        <div class="cv-shell">
+          <iframe
+            class="cv-frame"
+            src="assets/Gabriela_Bieda_CV.pdf#toolbar=1&navpanes=0"
+            title="Gabriela Bieda CV PDF">
+          </iframe>
+        </div>
+      </section>
+
+      <section id="portfolio" class="page" aria-labelledby="portfolio-title">
+        <div class="page-heading">
+          <p class="eyebrow">Selected work</p>
+          <h1 id="portfolio-title">Portfolio</h1>
+          <p>
+            A growing collection of projects combining bioinformatics, chemistry, machine learning
+            and molecular modeling.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <a class="project-card" href="projects/master-thesis/">
+            <span class="project-number">01</span>
+            <h2>DNA sequence effects on cytosine deamination</h2>
+            <p>Master's thesis project using MED and DTSS analyses.</p>
+            <span class="project-tags">Python · Molecular modeling · Data visualization</span>
+            <span class="project-link">Open project</span>
+          </a>
+
+          <a class="project-card" href="projects/deepmd/">
+            <span class="project-number">02</span>
+            <h2>Machine Learning Interatomic Potential for Formic Acid Dimer</h2>
+            <p>FAD molecular modeling and ML potential workflow.</p>
+            <span class="project-tags">DeepMD · LAMMPS · Python</span>
+            <span class="project-link">Open project</span>
+          </a>
+
+          <a class="project-card" href="projects/protein-ml/">
+            <span class="project-number">03</span>
+            <h2>Protein ML project</h2>
+            <p>Space for a future bioinformatics or protein structure prediction project.</p>
+            <span class="project-tags">Bioinformatics · ML · Python</span>
+            <span class="project-link">Open project</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="contact" class="page" aria-labelledby="contact-title">
+        <div class="page-heading contact-heading">
+          <p class="eyebrow">Let’s connect</p>
+          <h1 id="contact-title">Contact</h1>
+          <p>
+            I am open to research, bioinformatics, computational chemistry and data science opportunities.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <a class="contact-card" href="mailto:gabi.bieda@hotmail.com">
+            <span>Email</span>
+            <strong>gabi.bieda@hotmail.com</strong>
+          </a>
+          <a class="contact-card" href="tel:+48731602139">
+            <span>Phone</span>
+            <strong>+48 731 602 139</strong>
+          </a>
+          <a class="contact-card" href="https://www.linkedin.com/in/gabriela-bieda-77a661300/" target="_blank" rel="noopener noreferrer">
+            <span>LinkedIn</span>
+            <strong>gabriela-bieda-77a661300</strong>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
