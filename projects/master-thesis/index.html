@@ -635,6 +635,72 @@
         }
       ];
 
+      function normalizePdbRecords(pdbText) {
+        return pdbText
+          .replace(/
+/g, "
+")
+          .replace(/\s+(?=(ATOM|HETATM|CONECT|TER|END))/g, "
+")
+          .trim();
+      }
+
+      function extractElement(recordParts) {
+        const lastToken = recordParts[recordParts.length - 1] || "";
+        const trailingElement = lastToken.replace(/[^A-Za-z]/g, "");
+
+        if (trailingElement.length >= 1 && trailingElement.length <= 2) {
+          return trailingElement;
+        }
+
+        const atomName = (recordParts[2] || "C").replace(/[0-9]/g, "").replace(/[^A-Za-z]/g, "");
+        return atomName.slice(0, 2) || "C";
+      }
+
+      function pdbTextToXyz(pdbText, title) {
+        const normalizedPdb = normalizePdbRecords(pdbText);
+        const lines = normalizedPdb.split(/
++/);
+        const atoms = [];
+
+        lines.forEach((line) => {
+          const trimmed = line.trim();
+
+          if (!/^(ATOM|HETATM)/.test(trimmed)) {
+            return;
+          }
+
+          const parts = trimmed.split(/\s+/);
+          const hasTrailingElement = /^[A-Za-z]{1,2}$/.test(parts[parts.length - 1] || "");
+          const coordinateStart = hasTrailingElement ? parts.length - 6 : parts.length - 5;
+
+          let x = parseFloat(parts[coordinateStart]);
+          let y = parseFloat(parts[coordinateStart + 1]);
+          let z = parseFloat(parts[coordinateStart + 2]);
+          let element = extractElement(parts);
+
+          if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
+            x = parseFloat(line.slice(30, 38));
+            y = parseFloat(line.slice(38, 46));
+            z = parseFloat(line.slice(46, 54));
+            element = (line.slice(76, 78).trim() || element || "C").replace(/[^A-Za-z]/g, "");
+          }
+
+          if (Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z)) {
+            atoms.push(`${element} ${x} ${y} ${z}`);
+          }
+        });
+
+        if (atoms.length === 0) {
+          throw new Error("No atoms could be parsed from the PDB file.");
+        }
+
+        return `${atoms.length}
+${title}
+${atoms.join("
+")}`;
+      }
+
       function loadPdbViewer({ elementId, file }) {
         const viewerElement = document.getElementById(elementId);
 
@@ -654,11 +720,15 @@
             return response.text();
           })
           .then((pdbData) => {
-            viewer.addModel(pdbData, "pdb");
+            const xyzData = pdbTextToXyz(pdbData, file);
+            viewer.addModel(xyzData, "xyz");
 
             viewer.setStyle({}, {
               stick: {
                 radius: 0.16
+              },
+              sphere: {
+                scale: 0.22
               }
             });
 
@@ -667,7 +737,7 @@
           })
           .catch(() => {
             viewerElement.innerHTML =
-              `<div class='viewer-error'>PDB structure could not be loaded. Check the file path: ${file}</div>`;
+              `<div class='viewer-error'>PDB structure could not be loaded. Check the file format and path: ${file}</div>`;
           });
       }
 
