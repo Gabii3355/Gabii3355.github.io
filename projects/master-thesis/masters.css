@@ -35,8 +35,8 @@
 }
 
 .project-hero h1 {
-  max-width: 980px;
-  font-size: clamp(2.25rem, 5.6vw, 5.4rem);
+  max-width: 880px;
+  font-size: clamp(2rem, 4.4vw, 4.2rem);
 }
 
 .project-hero p,
@@ -73,9 +73,8 @@
 .hero-figure {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0;
-  min-height: 100%;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 26px;
   background:
@@ -86,8 +85,7 @@
 
 .hero-figure img {
   width: 100%;
-  height: 100%;
-  min-height: 360px;
+  max-height: 420px;
   object-fit: contain;
   padding: 24px;
 }
@@ -291,4 +289,62 @@
     transform: none;
     margin-bottom: 6px;
   }
+}
+.tech-grid {
+  overflow: visible;
+}
+
+.tooltip-card {
+  position: relative;
+  cursor: default;
+  overflow: visible;
+}
+
+.tooltip-card:focus {
+  outline: 2px solid rgba(104, 214, 193, 0.7);
+  outline-offset: 4px;
+}
+
+.tech-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 14px);
+  z-index: 20;
+  width: min(260px, 80vw);
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(104, 214, 193, 0.28);
+  border-radius: 16px;
+  color: var(--text);
+  background: rgba(8, 16, 20, 0.96);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.tech-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 12px;
+  height: 12px;
+  background: rgba(8, 16, 20, 0.96);
+  border-right: 1px solid rgba(104, 214, 193, 0.28);
+  border-bottom: 1px solid rgba(104, 214, 193, 0.28);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.tooltip-card:hover .tech-tooltip,
+.tooltip-card:focus .tech-tooltip,
+.tooltip-card:focus-within .tech-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
 }
