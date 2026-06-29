@@ -588,160 +588,183 @@
     </div>
 
     <script>
-      const lightbox = document.getElementById("image-lightbox");
-      const lightboxImage = document.getElementById("lightbox-image");
-      const closeButton = document.querySelector(".lightbox-close");
+      document.addEventListener("DOMContentLoaded", () => {
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImage = document.getElementById("lightbox-image");
+        const closeButton = document.querySelector(".lightbox-close");
 
-      document.querySelectorAll(".result-card img").forEach((image) => {
-        image.addEventListener("click", () => {
-          lightboxImage.src = image.src;
-          lightboxImage.alt = image.alt;
-          lightbox.classList.add("is-open");
-          lightbox.setAttribute("aria-hidden", "false");
-          document.body.classList.add("lightbox-open");
+        document.querySelectorAll(".result-card img").forEach((image) => {
+          image.addEventListener("click", () => {
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightbox.classList.add("is-open");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.classList.add("lightbox-open");
+          });
         });
-      });
 
-      function closeLightbox() {
-        lightbox.classList.remove("is-open");
-        lightbox.setAttribute("aria-hidden", "true");
-        lightboxImage.src = "";
-        lightboxImage.alt = "";
-        document.body.classList.remove("lightbox-open");
-      }
-
-      closeButton.addEventListener("click", closeLightbox);
-
-      lightbox.addEventListener("click", (event) => {
-        if (event.target === lightbox) {
-          closeLightbox();
-        }
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-          closeLightbox();
-        }
-      });
-
-      const structureViewers = [
-        {
-          elementId: "viewer-c-substrate",
-          file: "structures/C_S_B.pdb"
-        },
-        {
-          elementId: "viewer-5mc-substrate",
-          file: "structures/5mC_S_B.pdb"
-        }
-      ];
-
-      function normalizePdbRecords(pdbText) {
-        return pdbText
-          .replace(/
-/g, "
-")
-          .replace(/\s+(?=(ATOM|HETATM|CONECT|TER|END))/g, "
-")
-          .trim();
-      }
-
-      function extractElement(recordParts) {
-        const lastToken = recordParts[recordParts.length - 1] || "";
-        const trailingElement = lastToken.replace(/[^A-Za-z]/g, "");
-
-        if (trailingElement.length >= 1 && trailingElement.length <= 2) {
-          return trailingElement;
+        function closeLightbox() {
+          lightbox.classList.remove("is-open");
+          lightbox.setAttribute("aria-hidden", "true");
+          lightboxImage.src = "";
+          lightboxImage.alt = "";
+          document.body.classList.remove("lightbox-open");
         }
 
-        const atomName = (recordParts[2] || "C").replace(/[0-9]/g, "").replace(/[^A-Za-z]/g, "");
-        return atomName.slice(0, 2) || "C";
-      }
+        closeButton.addEventListener("click", closeLightbox);
 
-      function pdbTextToXyz(pdbText, title) {
-        const normalizedPdb = normalizePdbRecords(pdbText);
-        const lines = normalizedPdb.split(/
-+/);
-        const atoms = [];
+        lightbox.addEventListener("click", (event) => {
+          if (event.target === lightbox) {
+            closeLightbox();
+          }
+        });
 
-        lines.forEach((line) => {
-          const trimmed = line.trim();
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+            closeLightbox();
+          }
+        });
 
-          if (!/^(ATOM|HETATM)/.test(trimmed)) {
+        const structureViewers = [
+          {
+            elementId: "viewer-c-substrate",
+            file: "structures/C_S_B.pdb",
+            label: "C substrate, B-DNA"
+          },
+          {
+            elementId: "viewer-5mc-substrate",
+            file: "structures/5mC_S_B.pdb",
+            label: "5mC substrate, B-DNA"
+          }
+        ];
+
+        function normalizePdbRecords(pdbText) {
+          return pdbText
+            .replace(/\r/g, "\n")
+            .replace(/\s+(?=(ATOM|HETATM|CONECT|TER|END)\b)/g, "\n")
+            .trim();
+        }
+
+        function getElementFromLine(line, parts) {
+          const elementColumn = line.slice(76, 78).trim();
+          if (/^[A-Za-z]{1,2}$/.test(elementColumn)) {
+            return elementColumn;
+          }
+
+          const lastToken = parts[parts.length - 1] || "";
+          if (/^[A-Za-z]{1,2}$/.test(lastToken)) {
+            return lastToken;
+          }
+
+          const atomName = (parts[2] || "C").replace(/[0-9]/g, "").replace(/[^A-Za-z]/g, "");
+          return atomName.slice(0, 2) || "C";
+        }
+
+        function parseAtomsFromPdb(pdbText) {
+          const lines = normalizePdbRecords(pdbText).split(/\n+/);
+          const atoms = [];
+
+          lines.forEach((line) => {
+            const trimmed = line.trim();
+
+            if (!/^(ATOM|HETATM)\b/.test(trimmed)) {
+              return;
+            }
+
+            const parts = trimmed.split(/\s+/);
+            let x = parseFloat(line.slice(30, 38));
+            let y = parseFloat(line.slice(38, 46));
+            let z = parseFloat(line.slice(46, 54));
+
+            if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
+              const numericTokens = parts.filter((token) => /^-?\d+(\.\d+)?$/.test(token));
+              x = parseFloat(numericTokens[numericTokens.length - 5]);
+              y = parseFloat(numericTokens[numericTokens.length - 4]);
+              z = parseFloat(numericTokens[numericTokens.length - 3]);
+            }
+
+            const element = getElementFromLine(line, parts);
+
+            if (Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z)) {
+              atoms.push({ element, x, y, z });
+            }
+          });
+
+          return atoms;
+        }
+
+        function atomsToXyz(atoms, title) {
+          const xyzLines = atoms.map((atom) => `${atom.element} ${atom.x} ${atom.y} ${atom.z}`);
+          return `${atoms.length}\n${title}\n${xyzLines.join("\n")}`;
+        }
+
+        function showViewerError(viewerElement, message) {
+          viewerElement.innerHTML = `<div class="viewer-error">${message}</div>`;
+        }
+
+        function loadStructureViewer({ elementId, file, label }) {
+          const viewerElement = document.getElementById(elementId);
+
+          if (!viewerElement) {
             return;
           }
 
-          const parts = trimmed.split(/\s+/);
-          const hasTrailingElement = /^[A-Za-z]{1,2}$/.test(parts[parts.length - 1] || "");
-          const coordinateStart = hasTrailingElement ? parts.length - 6 : parts.length - 5;
-
-          let x = parseFloat(parts[coordinateStart]);
-          let y = parseFloat(parts[coordinateStart + 1]);
-          let z = parseFloat(parts[coordinateStart + 2]);
-          let element = extractElement(parts);
-
-          if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
-            x = parseFloat(line.slice(30, 38));
-            y = parseFloat(line.slice(38, 46));
-            z = parseFloat(line.slice(46, 54));
-            element = (line.slice(76, 78).trim() || element || "C").replace(/[^A-Za-z]/g, "");
+          if (!window.$3Dmol) {
+            showViewerError(viewerElement, "3Dmol.js could not be loaded. Check the internet connection or script URL.");
+            return;
           }
 
-          if (Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z)) {
-            atoms.push(`${element} ${x} ${y} ${z}`);
-          }
-        });
-
-        if (atoms.length === 0) {
-          throw new Error("No atoms could be parsed from the PDB file.");
-        }
-
-        return `${atoms.length}
-${title}
-${atoms.join("
-")}`;
-      }
-
-      function loadPdbViewer({ elementId, file }) {
-        const viewerElement = document.getElementById(elementId);
-
-        if (!viewerElement || !window.$3Dmol) {
-          return;
-        }
-
-        const viewer = $3Dmol.createViewer(viewerElement, {
-          backgroundColor: "#0b1419"
-        });
-
-        fetch(file)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("PDB file not found");
-            }
-            return response.text();
-          })
-          .then((pdbData) => {
-            const xyzData = pdbTextToXyz(pdbData, file);
-            viewer.addModel(xyzData, "xyz");
-
-            viewer.setStyle({}, {
-              stick: {
-                radius: 0.16
-              },
-              sphere: {
-                scale: 0.22
+          fetch(file, { cache: "no-cache" })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`File not found: ${file}`);
               }
+              return response.text();
+            })
+            .then((pdbData) => {
+              const atoms = parseAtomsFromPdb(pdbData);
+
+              if (atoms.length === 0) {
+                throw new Error(`No atoms parsed from: ${file}`);
+              }
+
+              const viewer = $3Dmol.createViewer(viewerElement, {
+                backgroundColor: "#0b1419"
+              });
+
+              const xyzData = atomsToXyz(atoms, label);
+              viewer.addModel(xyzData, "xyz");
+
+              viewer.setStyle({}, {
+                stick: {
+                  radius: 0.18,
+                  colorscheme: "Jmol"
+                },
+                sphere: {
+                  scale: 0.28,
+                  colorscheme: "Jmol"
+                }
+              });
+
+              viewer.zoomTo();
+              viewer.render();
+
+              setTimeout(() => {
+                viewer.resize();
+                viewer.zoomTo();
+                viewer.render();
+              }, 150);
+            })
+            .catch((error) => {
+              showViewerError(
+                viewerElement,
+                `PDB structure could not be displayed. ${error.message}`
+              );
             });
+        }
 
-            viewer.zoomTo();
-            viewer.render();
-          })
-          .catch(() => {
-            viewerElement.innerHTML =
-              `<div class='viewer-error'>PDB structure could not be loaded. Check the file format and path: ${file}</div>`;
-          });
-      }
-
-      structureViewers.forEach(loadPdbViewer);
+        structureViewers.forEach(loadStructureViewer);
+      });
     </script>
 </body>
 </html>
