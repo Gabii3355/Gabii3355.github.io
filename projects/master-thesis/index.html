@@ -214,32 +214,32 @@
 
       <section class="project-section" aria-labelledby="structure-title">
         <p class="eyebrow">Interactive 3D structures</p>
-        <h2 id="structure-title">Substrate model previews</h2>
+        <h2 id="structure-title">B-DNA substrate model previews</h2>
         <p class="section-lead">
-          Two representative substrate structures are displayed directly in the browser.
-          Each PDB model can be rotated, zoomed and moved similarly to molecular viewers such as VMD or PyMOL.
+          Two representative substrate structures are displayed directly in the browser: cytosine and 5-methylcytosine in B-DNA.
+          The corresponding transition-state structures are included in the repository for comparison.
         </p>
 
         <div class="structure-viewer-grid">
           <article class="structure-viewer-card">
             <div class="viewer-heading">
               <span>Substrate</span>
-              <h3>C model</h3>
+              <h3>C_S_B.pdb</h3>
             </div>
             <div id="viewer-c-substrate" class="dna-viewer"></div>
             <p class="viewer-hint">
-              File: <code>structures/C_S_B.pdb</code>. Drag to rotate, scroll to zoom and right-click drag to move.
+              Displayed file: <code>structures/C_S_B.pdb</code>. Drag to rotate, scroll to zoom and right-click drag to move.
             </p>
           </article>
 
           <article class="structure-viewer-card">
             <div class="viewer-heading">
               <span>Substrate</span>
-              <h3>5mC B-DNA model</h3>
+              <h3>5mC_S_B.pdb</h3>
             </div>
             <div id="viewer-5mc-substrate" class="dna-viewer"></div>
             <p class="viewer-hint">
-              File: <code>structures/5mC_S_B.pdb</code>. Drag to rotate, scroll to zoom and right-click drag to move.
+              Displayed file: <code>structures/5mC_S_B.pdb</code>. Drag to rotate, scroll to zoom and right-click drag to move.
             </p>
           </article>
         </div>
@@ -371,8 +371,9 @@
         <p class="eyebrow">Repository</p>
         <h2 id="repo-title">Project structure</h2>
         <p class="section-lead">
-          The repository is organized around the real analysis workflow: model preparation,
-          energy calculations, visualization scripts, figures and documentation.
+          The repository is organized around the real analysis workflow: figures, selected PDB structures,
+          model preparation scripts, energy calculations and visualization scripts. The page displays only the two substrate B-DNA models,
+          while the repository also stores the corresponding transition-state structures.
         </p>
 
         <pre class="repo-tree"><code>master-thesis/
@@ -390,14 +391,14 @@
 │   ├── ADNA-BDNA-comparison.png
 │   └── favorable-sequence-context.png
 ├── structures/
-│   ├── C_S_A.pdb
-│   ├── C_TS_A.pdb
 │   ├── C_S_B.pdb
 │   ├── C_TS_B.pdb
-│   ├── 5mC_S_A.pdb
-│   ├── 5mC_TS_A.pdb
+│   ├── C_S_A.pdb
+│   ├── C_TS_A.pdb
 │   ├── 5mC_S_B.pdb
-│   └── 5mC_TS_B.pdb
+│   ├── 5mC_TS_B.pdb
+│   ├── 5mC_S_A.pdb
+│   └── 5mC_TS_A.pdb
 └── python/
     ├── model_preparation/
     │   ├── 01_mutate_ssdna.py
