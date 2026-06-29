@@ -873,6 +873,11 @@
   background: #0b1419;
 }
 
+
+.dna-viewer canvas {
+  display: block;
+}
+
 .viewer-hint {
   margin: 14px 4px 0;
   color: var(--muted);
@@ -966,4 +971,3 @@ body.lightbox-open {
     right: 14px;
   }
 }
-
