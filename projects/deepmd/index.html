@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Machine Learning Interatomic Potential for Formic Acid Dimer | Gabriela Bieda</title>
+  <title>Formic Acid Dimer MLP | Gabriela Bieda</title>
   <link rel="stylesheet" href="../../css/main.css" />
-  <link rel="stylesheet" href="../../css/portfolio_start.css" />
+  <link rel="stylesheet" href="formic.css" />
 </head>
 <body>
   <div class="site">
@@ -27,14 +27,550 @@
     </header>
 
     <main class="project-layout">
-      <section class="project-hero placeholder-hero">
-        <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
-        <p class="eyebrow">Project 02 · Molecular machine learning</p>
-        <h1>Machine Learning Interatomic Potential for Formic Acid Dimer</h1>
-        <p class="lead">This project page will contain the DeepMD/FAD workflow, learning curves, validation plots and selected scripts.</p>
-        <div class="status-card">In progress</div>
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-content">
+          <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
+          <p class="eyebrow">Project 02 · Machine learning potential</p>
+          <h1 id="project-title">Machine learning interatomic potential for formic acid dimer</h1>
+          <p class="lead">
+            Student computational chemistry project focused on training a DeePMD-kit neural network potential
+            for the formic acid dimer and using it in a LAMMPS molecular dynamics simulation.
+          </p>
+          <p class="hero-note">
+            The workflow connects ORCA AIMD reference data, Python preprocessing, DeepMD model training,
+            quantitative testing and molecular dynamics deployment.
+          </p>
+
+          <div class="method-badge-row" aria-label="Main project methods">
+            <span>ORCA AIMD</span>
+            <span>DeepMD-kit</span>
+            <span>LAMMPS</span>
+            <span>Python</span>
+            <span>ML potential</span>
+          </div>
+        </div>
+
+        <div class="hero-visuals" aria-label="Formic acid dimer preview">
+          <figure class="hero-figure hero-figure-single">
+            <img src="figures/formic-acid-dimer.png" alt="Formic acid dimer molecular structure" />
+            <figcaption class="carousel-caption">Formic acid dimer used for the machine learning potential workflow.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section research-section" aria-labelledby="research-question-title">
+        <p class="eyebrow">Project aim</p>
+        <h2 id="research-question-title">Can AIMD data be transformed into a stable machine learning potential?</h2>
+        <p>
+          The main goal was to build a reproducible workflow: convert ORCA trajectories into DeepMD format,
+          train a neural network potential, test its accuracy and check whether the compressed model can run
+          a stable LAMMPS simulation of the formic acid dimer.
+        </p>
+
+        <div class="research-grid" aria-label="Project objectives">
+          <article class="research-card">
+            <span>01</span>
+            <h3>Prepare reference data</h3>
+            <p>Use AIMD trajectories at 500 K and 298 K as training and validation datasets.</p>
+          </article>
+
+          <article class="research-card">
+            <span>02</span>
+            <h3>Train DeepMD model</h3>
+            <p>Use local atomic environments and energy-force loss terms to learn the potential energy surface.</p>
+          </article>
+
+          <article class="research-card">
+            <span>03</span>
+            <h3>Run molecular dynamics</h3>
+            <p>Deploy the compressed model in LAMMPS and evaluate the stability of the generated trajectory.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="workflow-title">
+        <h2 id="workflow-title">Workflow</h2>
+        <ol class="workflow-list">
+          <li>Prepare ORCA AIMD trajectories and force files for 298 K and 500 K datasets.</li>
+          <li>Convert positions, energies and forces into the DeepMD numpy format.</li>
+          <li>Create the DeepMD training configuration with descriptor and fitting network parameters.</li>
+          <li>Train the model for 50,000 optimization steps and monitor training and validation RMSE.</li>
+          <li>Freeze and compress the trained model into a graph file for efficient simulation.</li>
+          <li>Run a LAMMPS NVT simulation at 298 K using the compressed machine learning potential.</li>
+          <li>Analyze prediction errors, energy distributions and RMSD of the MLP trajectory.</li>
+        </ol>
+      </section>
+
+      <section class="project-section" aria-labelledby="methodology-title">
+        <p class="eyebrow">Methodology</p>
+        <h2 id="methodology-title">From AIMD trajectories to a compressed DeepMD model</h2>
+
+        <div class="methodology-grid">
+          <article class="methodology-card">
+            <span class="step-number">01</span>
+            <h3>AIMD data</h3>
+            <p>Reference configurations came from ORCA ab initio molecular dynamics at two temperatures.</p>
+          </article>
+
+          <article class="methodology-card">
+            <span class="step-number">02</span>
+            <h3>Data conversion</h3>
+            <p>Python scripts converted XYZ trajectories, energies and forces into DeepMD folders.</p>
+          </article>
+
+          <article class="methodology-card">
+            <span class="step-number">03</span>
+            <h3>Model training</h3>
+            <p>The se_e2_a descriptor and a fitting network were used to learn energies and forces.</p>
+          </article>
+
+          <article class="methodology-card">
+            <span class="step-number">04</span>
+            <h3>Model testing</h3>
+            <p>The compressed graph was tested on the independent 298 K validation set.</p>
+          </article>
+
+          <article class="methodology-card">
+            <span class="step-number">05</span>
+            <h3>MD analysis</h3>
+            <p>LAMMPS output was analyzed with Python to inspect stability, temperature, energy and RMSD.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="technologies-title">
+        <p class="eyebrow">Technologies</p>
+        <h2 id="technologies-title">Tools used in the project</h2>
+        <p>
+          This project combines molecular simulation software with Python-based preprocessing,
+          numerical analysis and scientific visualization.
+        </p>
+
+        <div class="tech-grid" aria-label="Technologies used">
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🐍</span>
+            <strong>Python</strong>
+            <p class="tech-tooltip">Used for parsing XYZ files, creating DeepMD folders, analyzing logs and generating plots.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🔢</span>
+            <strong>NumPy</strong>
+            <p class="tech-tooltip">Used for coordinate arrays, energy arrays, force arrays and RMSD calculations.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📊</span>
+            <strong>pandas</strong>
+            <p class="tech-tooltip">Used for reading LAMMPS output tables and saving analysis results as CSV files.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📈</span>
+            <strong>Matplotlib</strong>
+            <p class="tech-tooltip">Used to plot learning curves, energy distributions, error metrics and RMSD.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>⚛️</span>
+            <strong>ORCA</strong>
+            <p class="tech-tooltip">Source of the AIMD trajectories used as reference data for the model.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🧠</span>
+            <strong>DeepMD-kit</strong>
+            <p class="tech-tooltip">Used to train, freeze, compress and test the machine learning interatomic potential.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🧪</span>
+            <strong>LAMMPS</strong>
+            <p class="tech-tooltip">Used to run molecular dynamics with the compressed DeepMD model.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🧬</span>
+            <strong>ASE</strong>
+            <p class="tech-tooltip">Useful for reading molecular structures and preparing simulation input files.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📓</span>
+            <strong>Jupyter</strong>
+            <p class="tech-tooltip">Used during exploratory development, debugging and plotting.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🐧</span>
+            <strong>Linux/Colab</strong>
+            <p class="tech-tooltip">Used for command-line execution of DeepMD and LAMMPS workflows.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="model-title">
+        <p class="eyebrow">Model setup</p>
+        <h2 id="model-title">DeepMD training configuration</h2>
+        <p class="section-lead">
+          The model used a smooth-edition two-body descriptor and was trained on the 500 K trajectory,
+          while the 298 K trajectory was kept as an independent validation and testing set.
+        </p>
+
+        <div class="metric-grid">
+          <article class="metric-card">
+            <span>Descriptor</span>
+            <strong>se_e2_a</strong>
+            <p>Smooth-edition two-body descriptor.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Cutoff</span>
+            <strong>6.0 Å</strong>
+            <p>Local environment cutoff radius.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Training</span>
+            <strong>50,000 steps</strong>
+            <p>Optimization with exponentially decreasing learning rate.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Datasets</span>
+            <strong>500 K → 298 K</strong>
+            <p>500 K for training, 298 K for validation and testing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="results-title">
+        <p class="eyebrow">Results</p>
+        <h2 id="results-title">Selected results</h2>
+        <p class="section-lead">
+          The plots below summarize convergence, force accuracy, AIMD energy coverage,
+          test-set errors and the stability of the LAMMPS trajectory.
+        </p>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img src="figures/learning-curve-rmse.png" alt="Training and validation RMSE learning curve" />
+            <figcaption>
+              <strong>Learning curve</strong>
+              Training and validation RMSE decrease during 50,000 optimization steps.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img src="figures/force-rmse-training.png" alt="Force RMSE during training" />
+            <figcaption>
+              <strong>Force RMSE</strong>
+              Force errors stabilize after the main early learning phase.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img src="figures/aimd-energy-over-time.png" alt="AIMD potential energy over time" />
+            <figcaption>
+              <strong>AIMD energy traces</strong>
+              The 500 K trajectory samples a broader energy range than the 298 K trajectory.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img src="figures/energy-distribution-aimd.png" alt="AIMD energy distribution" />
+            <figcaption>
+              <strong>Energy distribution</strong>
+              The higher-temperature dataset covers more diverse molecular configurations.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img src="figures/dp-test-error-metrics.png" alt="DeepMD test error metrics" />
+            <figcaption>
+              <strong>Prediction errors</strong>
+              Energy and force errors from dp test on the 298 K validation set.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img src="figures/rmsd-mlp-trajectory.png" alt="RMSD of MLP trajectory" />
+            <figcaption>
+              <strong>MLP trajectory RMSD</strong>
+              The LAMMPS trajectory remains structurally stable during the 10,000-step simulation.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="findings-title">
+        <p class="eyebrow">Key findings</p>
+        <h2 id="findings-title">Main conclusions</h2>
+
+        <div class="findings-list">
+          <details class="finding-card" open>
+            <summary>Finding 1</summary>
+            <div>
+              <h3>The model converged without clear overfitting.</h3>
+              <p>
+                Training and validation errors decreased together, and the validation curve remained close to the training curve.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 2</summary>
+            <div>
+              <h3>The 500 K trajectory was a useful training set.</h3>
+              <p>
+                It sampled a wider region of the potential energy surface, while 298 K provided a lower-temperature validation test.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 3</summary>
+            <div>
+              <h3>The final test errors were low.</h3>
+              <p>
+                The model reached 2.25 meV energy MAE, 2.89 meV energy RMSE, 23 meV/Å force MAE and 29 meV/Å force RMSE.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 4</summary>
+            <div>
+              <h3>The compressed model produced a stable trajectory.</h3>
+              <p>
+                RMSD stayed below approximately 0.26 Å during the 10,000-step LAMMPS simulation at 298 K.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="repo-title">
+        <p class="eyebrow">Repository</p>
+        <h2 id="repo-title">Recommended project structure</h2>
+        <p class="section-lead">
+          The notebook can stay in the repository as documentation, but the main portfolio version should use cleaned scripts.
+          This makes the project easier to read, reproduce and present on GitHub.
+        </p>
+
+        <pre class="repo-tree"><code>formic-acid-mlp/
+├── index.html
+├── formic.css
+├── README.md
+├── requirements.txt
+├── environment.yml
+├── reports/
+│   └── formic_acid_288684.pdf
+├── figures/
+│   ├── formic-acid-dimer.png
+│   ├── learning-curve-rmse.png
+│   ├── force-rmse-training.png
+│   ├── aimd-energy-over-time.png
+│   ├── aimd-relative-energy.png
+│   ├── energy-distribution-aimd.png
+│   ├── dp-test-error-metrics.png
+│   └── rmsd-mlp-trajectory.png
+├── notebooks/
+│   └── task_2_ML.ipynb
+├── scripts/
+│   ├── 01_convert_orca_aimd_to_deepmd.py
+│   ├── 02_make_deepmd_input.py
+│   ├── 03_prepare_lammps_run.py
+│   ├── 04_plot_training_and_test_results.py
+│   └── 05_analyze_lammps_trajectory.py
+├── lammps/
+│   └── in.lammps
+├── data/
+│   └── README.md
+└── models/
+    └── README.md</code></pre>
+
+        <p class="repo-note">
+          Do not upload very large raw trajectories, numpy datasets or model checkpoints directly to GitHub.
+          For large files use Git LFS, a release asset or an external data link. Keep the repository focused on code,
+          final figures, the report and small representative inputs.
+        </p>
+      </section>
+
+      <section class="project-section" aria-labelledby="scripts-title">
+        <p class="eyebrow">Python scripts</p>
+        <h2 id="scripts-title">Clean script version of the notebook</h2>
+        <p class="section-lead">
+          The original notebook is useful for showing the development process, but the scripts below are better for a portfolio repository.
+        </p>
+
+        <div class="section-actions">
+          <a class="github-button" href="https://github.com/Gabii3355/Gabii3355.github.io/tree/main/projects/formic-acid-mlp/scripts" target="_blank" rel="noopener noreferrer">
+            View scripts on GitHub
+          </a>
+        </div>
+
+        <div class="script-grid">
+          <article class="script-card">
+            <span class="script-tag">Data conversion</span>
+            <h3>01_convert_orca_aimd_to_deepmd.py</h3>
+            <p>Parses ORCA AIMD XYZ trajectories and force files, converts Hartree units to eV and writes DeepMD numpy folders.</p>
+          </article>
+
+          <article class="script-card">
+            <span class="script-tag">Training config</span>
+            <h3>02_make_deepmd_input.py</h3>
+            <p>Creates the input.json file with descriptor, fitting network, learning rate and loss settings.</p>
+          </article>
+
+          <article class="script-card">
+            <span class="script-tag">LAMMPS setup</span>
+            <h3>03_prepare_lammps_run.py</h3>
+            <p>Creates conf.lmp and in.lammps for an NVT simulation using graph-compress.pb.</p>
+          </article>
+
+          <article class="script-card">
+            <span class="script-tag">Visualization</span>
+            <h3>04_plot_training_and_test_results.py</h3>
+            <p>Plots learning curves, energy traces, energy histograms and dp test error metrics.</p>
+          </article>
+
+          <article class="script-card">
+            <span class="script-tag">Trajectory analysis</span>
+            <h3>05_analyze_lammps_trajectory.py</h3>
+            <p>Reads LAMMPS logs and dump files, calculates RMSD and saves trajectory analysis figures.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="interactive-title">
+        <p class="eyebrow">Quick metrics</p>
+        <h2 id="interactive-title">Hover-based highlights</h2>
+        <p class="section-lead">
+          These small cards make the most important numerical results visible without opening the full report.
+        </p>
+
+        <div class="interactive-grid">
+          <article class="interactive-card">
+            <span class="position-label">2.25 meV</span>
+            <strong>Energy MAE</strong>
+            <p>Hover to view context</p>
+            <div class="data-popup">
+              <span>dp test on 298 K validation set</span>
+              <span>Energy RMSE: 2.89 meV</span>
+            </div>
+          </article>
+
+          <article class="interactive-card">
+            <span class="position-label">29 meV/Å</span>
+            <strong>Force RMSE</strong>
+            <p>Hover to view context</p>
+            <div class="data-popup">
+              <span>Force MAE: 23 meV/Å</span>
+              <span>Small force errors support stable MD</span>
+            </div>
+          </article>
+
+          <article class="interactive-card">
+            <span class="position-label">&lt; 0.26 Å</span>
+            <strong>RMSD</strong>
+            <p>Hover to view context</p>
+            <div class="data-popup">
+              <span>10,000-step LAMMPS trajectory</span>
+              <span>NVT simulation at 298 K</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="challenges-title">
+        <p class="eyebrow">Challenges</p>
+        <h2 id="challenges-title">What made this project challenging?</h2>
+
+        <div class="challenge-grid">
+          <article class="challenge-card">
+            <span>01</span>
+            <h3>Data conversion</h3>
+            <p>ORCA trajectories had to be converted into the specific folder and array format expected by DeepMD.</p>
+          </article>
+
+          <article class="challenge-card">
+            <span>02</span>
+            <h3>Environment setup</h3>
+            <p>DeepMD-kit, TensorFlow and LAMMPS needed compatible versions, especially in a Colab-based workflow.</p>
+          </article>
+
+          <article class="challenge-card">
+            <span>03</span>
+            <h3>Simulation validation</h3>
+            <p>The model was not only tested numerically, but also checked through LAMMPS trajectory stability.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="learned-title">
+        <p class="eyebrow">What I learned</p>
+        <h2 id="learned-title">Skills developed during the project</h2>
+
+        <div class="learned-grid">
+          <article>Machine learning potentials</article>
+          <article>DeepMD-kit workflow</article>
+          <article>LAMMPS simulation setup</article>
+          <article>AIMD data preprocessing</article>
+          <article>Scientific visualization</article>
+          <article>Reproducible project structure</article>
+        </div>
       </section>
     </main>
   </div>
+
+  <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close image preview">×</button>
+    <img id="lightbox-image" src="" alt="" />
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.querySelector(".lightbox-close");
+
+      document.querySelectorAll(".result-card img, .hero-figure img").forEach((image) => {
+        image.addEventListener("click", () => {
+          lightboxImage.src = image.src;
+          lightboxImage.alt = image.alt;
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+          document.body.classList.add("lightbox-open");
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+        document.body.classList.remove("lightbox-open");
+      }
+
+      closeButton.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
