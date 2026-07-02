@@ -94,15 +94,20 @@ formic-acid-mlp/
 │   └── 05_analyze_lammps_trajectory.py
 ├── notebooks/
 │   └── task_2_ML.ipynb
-├── lammps/
-│   ├── in.lammps
-│   └── conf.lmp
-├── reports/
-│   └── formic_acid_288684.pdf
 ├── data/
-│   └── README.md
-└── models/
-    └── README.md
+│   ├── raw/
+│   │   ├── trajectory_298.xyz
+│   │   └── trajectory_500.xyz
+│   └── deepmd/
+│       ├── FAD_298/
+│       └── FAD_500/
+├── models/
+│   ├── graph.pb
+│   └── graph-compress.pb
+└── lammps/
+    ├── in.lammps
+    ├── conf.lmp
+    └── fad_mlp.dump
 ```
 
 ## Scripts
@@ -211,3 +216,11 @@ A portfolio page presenting this project is available in the GitHub Pages versio
 Gabriela Bieda  
 MSc Bioinformatics student  
 Computational chemistry · Molecular modeling · Machine learning
+
+## Acknowledgements
+
+The scripts used in this project were adapted and modified for the formic acid dimer system based on the official DeepModeling DeePMD-kit hands-on tutorial:
+
+[DeepMD-kit Handson-Tutorial v2.0.3](https://tutorials.deepmodeling.com/en/latest/Tutorials/DeePMD-kit/learnDoc/Handson-Tutorial%28v2.0.3%29.html)
+
+The original tutorial presents the general DeePMD-kit workflow, including data preparation, model training and model application. In this project, the workflow was adjusted to ORCA AIMD data for the formic acid dimer, with the 500 K trajectory used for training and the 298 K trajectory used for validation and testing.
