@@ -1,0 +1,25 @@
+
+plugin load /usr/local/lib/libdeepmd_lmp.so
+
+units           metal
+boundary        p p p
+atom_style      atomic
+
+read_data       conf.lmp
+
+pair_style      deepmd graph-compress.pb
+pair_coeff      * *
+
+velocity        all create 298.0 12345 mom yes rot yes dist gaussian
+
+fix             1 all nvt temp 298.0 298.0 0.1
+fix             2 all momentum 100 linear 1 1 1 angular
+
+timestep        0.0005
+
+thermo          100
+thermo_style    custom step temp pe ke etotal
+
+dump            1 all custom 100 fad_mlp.dump id type x y z
+
+run             10000
