@@ -1071,6 +1071,7 @@ body.lightbox-open {
    ========================= */
 
 .hero-figure-single {
+  flex-direction: column;
   cursor: zoom-in;
   min-height: 440px;
 }
