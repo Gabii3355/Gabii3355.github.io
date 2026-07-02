@@ -1,0 +1,28 @@
+name: formic-acid-mlp
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10
+
+  # Data processing and numerical analysis
+  - numpy
+  - pandas
+  - matplotlib
+
+  # Molecular data handling
+  - ase
+  - dpdata
+
+  # Machine learning interatomic potential and MD simulation
+  # If installation fails on your system, install these separately following DeepMD-kit/LAMMPS documentation.
+  - deepmd-kit
+  - lammps
+
+  # Notebook support
+  - jupyterlab
+  - ipykernel
+
+  # Optional utilities
+  - pip
