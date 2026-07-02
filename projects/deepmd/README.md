@@ -7,3 +7,6 @@ Suggested scripts to add later:
 - `scripts/convert_to_deepmd.py`
 - `scripts/plot_learning_curve.py`
 - `scripts/evaluate_predictions.py`
+
+conda env create -f environment.yml
+conda activate formic-acid-mlp
