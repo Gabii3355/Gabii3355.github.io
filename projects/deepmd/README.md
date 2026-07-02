@@ -184,31 +184,6 @@ Analyze the LAMMPS trajectory:
 ```bash
 python scripts/05_analyze_lammps_trajectory.py
 ```
-
-## Large files
-
-Large files are not stored directly in the main GitHub Pages files.
-
-The following files may be provided through Git LFS or GitHub Releases:
-
-```text
-data/raw/trajectory_298.xyz
-data/raw/trajectory_500.xyz
-data/deepmd/**/*.npy
-models/graph.pb
-models/graph-compress.pb
-lammps/fad_mlp.dump
-```
-
-If the files are stored with Git LFS, download them after cloning the repository:
-
-```bash
-git lfs install
-git lfs pull
-```
-
-If the files are stored as a GitHub Release, download the archive from the release page and unpack it into the project folder.
-
 ## Technologies
 
 - Python
