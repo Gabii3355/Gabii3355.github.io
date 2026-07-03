@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>FASTQ Quality Control in R | Gabriela Bieda</title>
+
   <link rel="stylesheet" href="../../css/main.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -31,17 +33,18 @@
       <section class="project-hero" aria-labelledby="project-title">
         <div class="hero-content">
           <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
+
           <p class="eyebrow">Project 03 · Bioinformatics mini project</p>
           <h1 id="project-title">FASTQ Quality Control in R</h1>
 
           <p class="lead">
-            A bioinformatics workflow for analysing sequencing read quality, filtering low-quality reads
-            and trimming FASTQ data using GNU R, R Markdown and Bioconductor.
+            A reproducible bioinformatics workflow for analysing sequencing read quality,
+            filtering unreliable reads and trimming FASTQ data using GNU R, R Markdown and Bioconductor.
           </p>
 
           <p class="hero-note">
-            The project focuses on reproducible preprocessing of sequencing reads: quality inspection,
-            Phred score analysis, read filtering, trimming and export of a cleaned FASTQ file.
+            The project focuses on practical preprocessing of sequencing reads: Phred quality analysis,
+            quality boxplots, filtering, trimming and export of a cleaned FASTQ file.
           </p>
 
           <div class="method-badge-row" aria-label="Main project methods">
@@ -61,41 +64,49 @@
       <section class="project-section research-section" aria-labelledby="goal-title">
         <p class="eyebrow">Project goal</p>
         <h2 id="goal-title">How can low-quality FASTQ reads be detected and improved before downstream analysis?</h2>
+
         <p>
-          The aim of this project was to inspect read quality, identify problematic regions in sequencing data
-          and apply filtering and trimming rules to obtain a cleaner FASTQ dataset.
+          The aim was to inspect quality scores across sequencing reads, identify problematic regions
+          and apply filtering and trimming rules to produce a cleaner dataset for further analysis.
         </p>
 
         <div class="research-grid" aria-label="Project objectives">
           <article class="research-card">
             <span>01</span>
             <h3>Inspect read quality</h3>
-            <p>Convert encoded quality scores into numeric Phred values and visualize quality across read positions.</p>
+            <p>
+              Encoded quality values were converted into numeric Phred scores and visualized by base position.
+            </p>
           </article>
 
           <article class="research-card">
             <span>02</span>
             <h3>Filter unreliable reads</h3>
-            <p>Remove reads that contain too many low-quality bases or do not meet selected quality criteria.</p>
+            <p>
+              Reads with poor quality profiles were removed according to selected quality threshold rules.
+            </p>
           </article>
 
           <article class="research-card">
             <span>03</span>
-            <h3>Trim low-quality ends</h3>
-            <p>Shorten reads to remove unreliable sequence regions while preserving the link between bases and quality scores.</p>
+            <h3>Trim low-quality regions</h3>
+            <p>
+              Low-quality read ends were trimmed while preserving the link between DNA bases and quality scores.
+            </p>
           </article>
         </div>
       </section>
 
       <section class="project-section" aria-labelledby="workflow-title">
         <h2 id="workflow-title">Workflow</h2>
+
         <ol class="workflow-list">
           <li>Load the FASTQ file using the ShortRead package.</li>
           <li>Extract DNA sequences and quality scores from the FASTQ object.</li>
           <li>Convert encoded quality values into a numeric Phred quality matrix.</li>
           <li>Generate quality boxplots before processing.</li>
-          <li>Apply filtering rules to remove unreliable reads.</li>
-          <li>Trim selected read regions based on quality profile.</li>
+          <li>Apply filtering rules to remove low-quality reads.</li>
+          <li>Trim unreliable read regions based on the quality profile.</li>
           <li>Save the processed FASTQ file and final quality plot.</li>
         </ol>
       </section>
@@ -108,31 +119,41 @@
           <article class="methodology-card">
             <span class="step-number">01</span>
             <h3>Input data</h3>
-            <p>FASTQ reads were loaded together with their sequence identifiers and base-level quality scores.</p>
+            <p>
+              FASTQ reads were loaded together with their sequence identifiers and base-level quality scores.
+            </p>
           </article>
 
           <article class="methodology-card">
             <span class="step-number">02</span>
             <h3>Quality matrix</h3>
-            <p>Quality scores were converted from encoded characters into numeric Phred values.</p>
+            <p>
+              Quality scores were converted from encoded characters into numeric Phred values.
+            </p>
           </article>
 
           <article class="methodology-card">
             <span class="step-number">03</span>
-            <h3>Quality plots</h3>
-            <p>Boxplots were used to inspect quality distribution across read positions.</p>
+            <h3>Visualization</h3>
+            <p>
+              Boxplots were used to inspect quality distribution across read positions.
+            </p>
           </article>
 
           <article class="methodology-card">
             <span class="step-number">04</span>
             <h3>Filtering</h3>
-            <p>Reads with poor quality profiles were removed according to selected threshold rules.</p>
+            <p>
+              Reads that did not meet selected quality criteria were excluded from the dataset.
+            </p>
           </article>
 
           <article class="methodology-card">
             <span class="step-number">05</span>
             <h3>Trimming</h3>
-            <p>Low-quality sequence ends were trimmed and the cleaned FASTQ file was saved.</p>
+            <p>
+              Low-quality ends were trimmed and the cleaned FASTQ file was saved.
+            </p>
           </article>
         </div>
       </section>
@@ -140,8 +161,9 @@
       <section class="project-section" aria-labelledby="technologies-title">
         <p class="eyebrow">Technologies</p>
         <h2 id="technologies-title">Tools used in the project</h2>
+
         <p class="section-lead">
-          The project combines R-based bioinformatics processing with reproducible reporting in R Markdown.
+          The project combines R-based sequence data processing with reproducible reporting.
         </p>
 
         <div class="tech-grid" aria-label="Technologies used">
@@ -186,12 +208,13 @@
       <section class="project-section" aria-labelledby="results-title">
         <p class="eyebrow">Results</p>
         <h2 id="results-title">Quality plots before and after processing</h2>
+
         <p class="section-lead">
-          The original reads were evaluated using per-base Phred quality scores. After filtering and trimming,
-          the final dataset retained reads with a more reliable quality profile.
+          The original reads were evaluated using per-base Phred quality scores.
+          After filtering and trimming, the final dataset retained reads with a more reliable quality profile.
         </p>
 
-        <div class="results-grid results-grid-main">
+        <div class="results-grid results-grid-main fastq-results">
           <figure class="result-card result-card-wide">
             <img src="figures/fastq_before.png" alt="FASTQ quality boxplot before processing" />
             <figcaption>
@@ -207,6 +230,42 @@
               Quality distribution after filtering low-quality reads and trimming unreliable regions.
             </figcaption>
           </figure>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="summary-title">
+        <p class="eyebrow">Quality summary</p>
+        <h2 id="summary-title">Before vs after processing</h2>
+
+        <p class="section-lead">
+          Replace the placeholder values below with the final statistics from your R output.
+          This section makes the project look more like a complete data analysis.
+        </p>
+
+        <div class="fastq-stat-grid" aria-label="FASTQ processing summary">
+          <article class="fastq-stat-card">
+            <span>Input reads</span>
+            <strong>...</strong>
+            <p>Number of reads before processing.</p>
+          </article>
+
+          <article class="fastq-stat-card">
+            <span>Retained reads</span>
+            <strong>...%</strong>
+            <p>Percentage of reads retained after filtering.</p>
+          </article>
+
+          <article class="fastq-stat-card">
+            <span>Quality threshold</span>
+            <strong>Q20</strong>
+            <p>Example Phred threshold used for filtering decisions.</p>
+          </article>
+
+          <article class="fastq-stat-card">
+            <span>Output</span>
+            <strong>FASTQ</strong>
+            <p>Processed reads saved as a new FASTQ file.</p>
+          </article>
         </div>
       </section>
 
@@ -253,12 +312,13 @@
       <section class="project-section" aria-labelledby="code-title">
         <p class="eyebrow">Code example</p>
         <h2 id="code-title">Core R workflow</h2>
+
         <p class="section-lead">
           The analysis was prepared in R Markdown and exported as a standalone R script.
           The script can process FASTQ input and save a cleaned FASTQ file together with a final quality plot.
         </p>
 
-        <pre class="repo-tree"><code>library(ShortRead)
+        <pre class="code-block"><code>library(ShortRead)
 
 fastq <- readFastq("input.fastq")
 seq <- sread(fastq)
@@ -278,8 +338,9 @@ writeFastq(trimmed, "processed_reads.fastq", compress = FALSE)</code></pre>
       <section class="project-section" aria-labelledby="repo-title">
         <p class="eyebrow">Repository</p>
         <h2 id="repo-title">Project structure</h2>
+
         <p class="section-lead">
-          The repository contains the project page, figures, R script, R Markdown source and PDF report.
+          The repository contains the project page, quality figures, R script, R Markdown source and PDF report.
         </p>
 
         <pre class="repo-tree"><code>fastq-qc/
@@ -305,6 +366,7 @@ writeFastq(trimmed, "processed_reads.fastq", compress = FALSE)</code></pre>
       <section class="project-section" aria-labelledby="scripts-title">
         <p class="eyebrow">Project files</p>
         <h2 id="scripts-title">Available materials</h2>
+
         <p class="section-lead">
           The main files include the standalone R script, R Markdown report source and final PDF report.
         </p>
@@ -319,28 +381,36 @@ writeFastq(trimmed, "processed_reads.fastq", compress = FALSE)</code></pre>
           <article class="script-card">
             <span class="script-tag">R script</span>
             <h3>fastq_filter_trim.R</h3>
-            <p>Standalone script for reading FASTQ data, applying filtering and trimming, and saving processed reads.</p>
+            <p>
+              Standalone script for reading FASTQ data, applying filtering and trimming, and saving processed reads.
+            </p>
             <code>code/fastq_filter_trim.R</code>
           </article>
 
           <article class="script-card">
             <span class="script-tag">R Markdown</span>
             <h3>r_fastq.Rmd</h3>
-            <p>Reproducible analysis document containing code, quality plots and explanation of the processing strategy.</p>
+            <p>
+              Reproducible analysis document containing code, quality plots and explanation of the processing strategy.
+            </p>
             <code>code/r_fastq.Rmd</code>
           </article>
 
           <article class="script-card">
             <span class="script-tag">Report</span>
             <h3>proj4_report.pdf</h3>
-            <p>Final PDF report with quality plots before and after processing and a description of the implementation.</p>
+            <p>
+              Final PDF report with quality plots before and after processing and a description of the implementation.
+            </p>
             <code>reports/proj4_report.pdf</code>
           </article>
 
           <article class="script-card">
             <span class="script-tag">Figures</span>
             <h3>quality plots</h3>
-            <p>PNG figures showing the read quality distribution before and after filtering and trimming.</p>
+            <p>
+              PNG figures showing the read quality distribution before and after filtering and trimming.
+            </p>
             <code>figures/fastq_before.png</code>
           </article>
         </div>
@@ -354,19 +424,25 @@ writeFastq(trimmed, "processed_reads.fastq", compress = FALSE)</code></pre>
           <article class="challenge-card">
             <span>01</span>
             <h3>FASTQ integrity</h3>
-            <p>Sequences and quality scores had to be processed together to avoid breaking the FASTQ structure.</p>
+            <p>
+              Sequences and quality scores had to be processed together to avoid breaking the FASTQ structure.
+            </p>
           </article>
 
           <article class="challenge-card">
             <span>02</span>
             <h3>Quality-based decisions</h3>
-            <p>Filtering and trimming parameters were selected based on the observed Phred quality distribution.</p>
+            <p>
+              Filtering and trimming parameters were selected based on the observed Phred quality distribution.
+            </p>
           </article>
 
           <article class="challenge-card">
             <span>03</span>
             <h3>Reproducibility</h3>
-            <p>The workflow was documented in R Markdown and converted into a reusable R script.</p>
+            <p>
+              The workflow was documented in R Markdown and converted into a reusable R script.
+            </p>
           </article>
         </div>
       </section>
