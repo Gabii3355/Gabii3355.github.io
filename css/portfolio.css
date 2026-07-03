@@ -69,6 +69,14 @@
   color: var(--accent);
   font-weight: 900;
 }
+.project-link-completed {
+  color: #4ade80
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  color: var(--accent);
+  font-weight: 900;
+}
 
 @media (max-width: 920px) {
   .project-grid {
