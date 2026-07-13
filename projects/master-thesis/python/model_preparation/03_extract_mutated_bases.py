@@ -2,12 +2,12 @@ from pathlib import Path
 import re
 from pymol import cmd
 
-# Skrypt dla każdego mutanta:
-# - odczytuje z nazwy pliku, która pozycja była mutowana,
-# - wycina TYLKO zasadę azotową z tej pozycji,
-# - zapisuje osobno:
-#     1) samą zasadę bez dodatkowych H
-#     2) tę samą zasadę po dodaniu H
+# Script for each mutant:
+# - reads from the filename which position was mutated,
+# - removes ONLY the nitrogenous base from that position,
+# - writes separately:
+# 1) the same base without additional H
+# 2) the same base after adding H
 
 #   run extract_bases.py
 #   extract_mutated_bases
@@ -20,7 +20,7 @@ TEMP_BASE_RAW = "temp_base_raw"
 TEMP_BASE_H = "temp_base_h"
 EXPECTED_COUNT = 80
 
-# Nazwa pliku musi mieć format: A_pos5_T.pdb albo B_pos10_G.pdb
+# The file name must be in the following format: A_pos5_T.pdb or B_pos10_G.pdb
 MUTANT_PATTERN = re.compile(r"^([AB])_pos(\d+)_([ACGT])\.pdb$", re.IGNORECASE)
 
 BASE_ATOMS = {
@@ -57,7 +57,7 @@ def _mutant_files():
 def _parse_mutant_filename(path):
     match = MUTANT_PATTERN.match(path.name)
     if not match:
-        raise ValueError(f"Niepoprawna nazwa pliku mutanta: {path.name}")
+        raise ValueError(f"Invalid mutant file name: {path.name}")
 
     model_tag = match.group(1).upper()
     position = int(match.group(2))
@@ -85,11 +85,11 @@ def _extract_one(mutant_path):
     if atom_count == 0:
         _safe_delete(TEMP_OBJECT)
         raise ValueError(
-            f"Nie znaleziono atomów zasady dla pliku {mutant_path.name} "
-            f"(pozycja {position}, baza {base})."
+            f"No base atoms found for file {mutant_path.name} "
+            f"(position {position}, base {base})."
         )
 
-    # 1) Zapis samej zasady bez dodatkowych H
+    # 1) Writing the base itself without additional H
     cmd.create(TEMP_BASE_RAW, base_selection)
     cmd.remove(f"{TEMP_BASE_RAW} and hydro")
     cmd.sort(TEMP_BASE_RAW)
@@ -98,7 +98,7 @@ def _extract_one(mutant_path):
     raw_path = OUTPUT_RAW_DIR / raw_name
     cmd.save(str(raw_path), TEMP_BASE_RAW)
 
-    # 2) Osobna kopia tej samej zasady i dodanie H
+    # 2) Separate copy of the same rule and adding H
     cmd.create(TEMP_BASE_H, TEMP_BASE_RAW)
     cmd.h_add(TEMP_BASE_H)
     cmd.sort(TEMP_BASE_H)
@@ -122,7 +122,7 @@ def extract_mutated_bases():
 
     if not files:
         raise FileNotFoundError(
-            f"Nie znaleziono żadnych plików mutantów w katalogu: {INPUT_DIR}"
+            f"No mutant files found in directory: {INPUT_DIR}"
         )
 
     raw_saved = 0
@@ -133,13 +133,13 @@ def extract_mutated_bases():
         h_saved += 1
 
     print("=" * 60)
-    print(f"Gotowe. Przetworzono mutantów: {len(files)}")
-    print(f"Surowe zasady: {raw_saved} -> {OUTPUT_RAW_DIR}")
-    print(f"Zasady z H: {h_saved} -> {OUTPUT_H_DIR}")
+    print(f"Done. Processed mutants: {len(files)}")
+    print(f"Raw rules: {raw_saved} -> {OUTPUT_RAW_DIR}")
+    print(f"Rules from H: {h_saved} -> {OUTPUT_H_DIR}")
     if raw_saved != EXPECTED_COUNT or h_saved != EXPECTED_COUNT:
         print(
-            f"Uwaga: oczekiwano {EXPECTED_COUNT} mutantów, ale zapisano "
-            f"RAW={raw_saved}, H={h_saved}. Sprawdź katalog mutants_all."
+           f"Warning: Expected {EXPECTED_COUNT} mutants, but saved "
+           f"RAW={raw_saved}, H={h_saved}. Check the mutants_all directory."
         )
     print("=" * 60)
 
