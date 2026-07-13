@@ -92,8 +92,8 @@ def mutate_all():
                 total += 1
 
     print("=" * 60)
-    print(f"Gotowe. Wygenerowano {total} struktur w katalogu: {OUTPUT_DIR}")
-    print("Centralna reszta nr 6 nie była mutowana.")
+    print(f"Done. {total} structures generated in directory: {OUTPUT_DIR}")
+    print("Central residue number 6 was not mutated.")
     print("=" * 60)
 
 
