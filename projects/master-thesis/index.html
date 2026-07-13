@@ -436,10 +436,15 @@
     │   ├── 06_calculate_das.py
     │   └── external/
     │       └── das_dispersion_core.py
-    └── visualization/
-        ├── 07_plot_dtss_heatmaps.py
-        ├── 08_plot_das_camm_components.py
-        └── 09_plot_dtss_sequence_logos.py</code></pre>
+    |   └── visualization/
+    |       ├── 07_plot_dtss_heatmaps.py
+    |       ├── 08_plot_das_camm_components.py
+    |       └── 09_plot_dtss_sequence_logos.py
+    |   
+    └── automated_data_analysis/
+            ├── deamination_analysis.ipynb
+            └── deamination_results.csv
+ </code></pre>
 
         <p class="repo-note">
           The <code>figures</code> folder contains the final figures and mutation snapshots used on this portfolio page.
@@ -447,6 +452,18 @@
           Some scripts require external software such as PyMOL, GAMESS, Open Babel and the
           <code>pymolecule</code> module.
         </p>
+        <p class="repo-note">
+  In addition to the individual Python scripts, a
+  <a
+    href="https://github.com/Gabii3355/Gabii3355.github.io/blob/main/projects/master-thesis/notebooks/deamination_analysis.ipynb"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    notebook
+  </a>
+  was created to automate MED data validation, DTSS calculation,
+  result organization and generation of the main plots.
+</p>
       </section>
 
       <section class="project-section" aria-labelledby="scripts-title">
