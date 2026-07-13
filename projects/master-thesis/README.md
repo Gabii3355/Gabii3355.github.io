@@ -1,3 +1,9 @@
+#TODO
+	dodać na stronie portfolio link do repozytorium w github na samym początku
+	dodać folder z notebookiem z automatyzowanym obliczaniem wartości MED. I DTSS
+	dodać na stronie informacje pod opisem kodów pythona, że został również utworzony notebook do automatycznego obliczenia MED i DTSS 
+	poprawić jak wygląda dokładnie repozytorium i dodać je do readme i usunąć na stronie z wynikami
+
 # DNA sequence effects on cytosine deamination
 
 This folder contains the portfolio page, figures and scripts for the master's thesis project.
