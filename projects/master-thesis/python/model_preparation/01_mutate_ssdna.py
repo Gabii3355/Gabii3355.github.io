@@ -10,7 +10,7 @@ def mutate_ssdna(selection, new_base):
     
     new_base = new_base.upper()
     if new_base not in base_map:
-        print(f"Błąd: Nieznana zasada '{new_base}'. Użyj A, C, G, T.")
+        print(f"Error: Unknown base '{new_base}'. Use A, C, G, T.")
         return
 
     mode_name = base_map[new_base]
@@ -24,8 +24,8 @@ def mutate_ssdna(selection, new_base):
         cmd.wizard() 
         # KLUCZOWE: Wymuszenie na silniku PyMOLa przeliczenia nowej topologii
         cmd.sort()
-        print(f"Sukces: Zmutowano {selection} na {mode_name}.")
+        print(f"Success: Mutated {selection} on {mode_name}.")
     except Exception as e:
-        print(f"Wystąpił błąd: {e}\nUpewnij się, że używasz PyMOLa w wersji 2.2 lub nowszej.")
+        print(f"Error appear: {e}\nMake sure you are using PyMOL version 2.2 or later.")
 
 cmd.extend("mutate_ssdna", mutate_ssdna)
