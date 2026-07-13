@@ -6,8 +6,6 @@ Computational analysis of the influence of the local nucleotide sequence on the 
 [Read the master's thesis](thesis.pdf)  
 [Open the analysis notebook](notebooks/deamination_analysis.ipynb)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/USERNAME/REPOSITORY_NAME/blob/main/notebooks/deamination_analysis.ipynb)
-
 ## Project overview
 
 This repository presents the workflow, results and conclusions of my master's thesis:
