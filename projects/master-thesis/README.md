@@ -2,12 +2,6 @@
 
 This folder contains the portfolio page, figures and scripts for the master's thesis project.
 
-TO DO:
-README.md z opisem projektu i instrukcją uruchomienia.
-Dane wejściowe i przetworzone w formacie CSV.
-Folder figures z wykresami w wysokiej jakości.
-Diagram workflow projektu.
-
 ## Requirements and external software
 
 Some scripts in this repository require external computational chemistry or molecular visualization tools. They may not run in a standard Python environment without these programs installed and configured.
