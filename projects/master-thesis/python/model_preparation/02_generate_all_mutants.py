@@ -10,7 +10,7 @@ INPUT_MODELS = {
     "B": "B-DNA-prepared.pdb",
 }
 
-# Mutuje wszystkie pozycje poza centralną cytozyną reakcyjną nr 6
+# Mutates all positions except the central reaction cytosine no. 6
 POSITIONS_TO_MUTATE = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11]
 BASES = ["A", "C", "G", "T"]
 OUTPUT_DIR = Path("mutants_all")
@@ -26,7 +26,7 @@ def _check_input_files():
     missing = [fname for fname in INPUT_MODELS.values() if not Path(fname).exists()]
     if missing:
         raise FileNotFoundError(
-            "Nie znaleziono plików wejściowych: " + ", ".join(missing)
+            "No input files found: " + ", ".join(missing)
         )
 
 
@@ -48,8 +48,8 @@ def _ensure_mutate_command_available():
 
     if "mutate_ssdna" not in commands:
         raise RuntimeError(
-            "Komenda 'mutate_ssdna' nie jest załadowana. "
-            "Najpierw wykonaj w PyMOL: run mutate_ssdna.py"
+          "The 'mutate_ssdna' command is not loaded. "
+          "First, run mutate_ssdna.py in PyMOL."
         )
 
 
@@ -63,11 +63,11 @@ def _mutate_one(model_tag, input_pdb, position, new_base):
     if atom_count <= 0:
         _cleanup_temp_items()
         raise ValueError(
-            f"Selekcja jest pusta dla modelu {model_tag}, pozycji {position}. "
-            f"Sprawdź numerację reszt w pliku {input_pdb}."
+           f"Selection is empty for model {model_tag}, position {position}. "
+        f"Check the residue numbering in the {input_pdb} file."
         )
 
-    print(f"Mutuję model {model_tag}: pozycja {position} -> {new_base}")
+    print(f"Mutating model {model_tag}: position {position} -> {new_base}")
     cmd.do(f"mutate_ssdna {TEMP_SELECTION}, {new_base}")
     cmd.sort()
 
@@ -76,7 +76,7 @@ def _mutate_one(model_tag, input_pdb, position, new_base):
     cmd.save(str(out_path), TEMP_OBJECT)
 
     _cleanup_temp_items()
-    print(f"Zapisano: {out_path}")
+    print(f"Saved: {out_path}")
 
 
 def mutate_all():
