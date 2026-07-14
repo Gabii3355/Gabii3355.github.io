@@ -1,4 +1,4 @@
-# Gabriela Bieda | Bioinformatics Portfolio
+# Gabriela Bieda | Portfolio
 
 This repository contains my personal portfolio website focused on bioinformatics, computational chemistry, molecular modeling and data analysis.
 
@@ -25,16 +25,9 @@ The portfolio is available through GitHub Pages:
 │   └── portfolio_start.css
 └── projects/
     ├── master-thesis/
-    │   ├── index.html
-    │   ├── masters.css
-    │   ├── figures/
-    │   ├── scripts/
-    │   └── README.md
     ├── deepmd/
-    │   └── index.html
     └── protein-ml/
-        └── index.html
-```
+     ```
 
 ## Main Sections
 
@@ -60,9 +53,8 @@ A computational chemistry project focused on the sequence-dependent spontaneous 
 
 A molecular modeling and machine learning project based on the preparation and validation of a machine learning interatomic potential.
 
-### Protein / ML Project
-
-A placeholder for future bioinformatics or machine learning projects.
+### FASTQ Quality Control in R
+Bioinformatics project focused on sequencing read quality analysis, filtering and trimming of FASTQ data.
 
 ## Technologies Used
 
@@ -80,6 +72,4 @@ The goal of this portfolio is to present my scientific projects in a clear and r
 
 Gabriela Bieda
 
-Bioinformatics MSc student
-Computational chemistry and molecular modeling enthusiast
-
+Bioinformatics | Computational Chemist | Data Analyst
