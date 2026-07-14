@@ -27,7 +27,8 @@ The portfolio is available through GitHub Pages:
     ├── master-thesis/
     ├── deepmd/
     └── protein-ml/
-     ```
+
+```
 
 ## Main Sections
 
