@@ -399,11 +399,13 @@
   </a>
 </div>
         <pre class="repo-tree"><code>master-thesis/
+master-thesis/
 ├── index.html
 ├── masters.css
 ├── README.md
 ├── thesis.pdf
 ├── requirements.txt
+│
 ├── figures/
 │   ├── DNA-scheme.png
 │   ├── DNA-scheme-ADNA.png
@@ -415,7 +417,8 @@
 │   ├── favorable-sequence-context.png
 │   ├── ADNA_5mC_S_pos(-1)_G.png
 │   ├── BDNA_5mC_S_pos(-1)_G.png
-│   └── additional mutation snapshots
+│   └── mutation_snapshots/
+│
 ├── structures/
 │   ├── C_S_B.pdb
 │   ├── C_TS_B.pdb
@@ -425,25 +428,28 @@
 │   ├── 5mC_TS_B.pdb
 │   ├── 5mC_S_A.pdb
 │   └── 5mC_TS_A.pdb
+│
 └── python/
-    ├── model_preparation/
-    │   ├── 01_mutate_ssdna.py
-    │   ├── 02_generate_all_mutants.py
-    │   └── 03_extract_mutated_bases.py
-    ├── energy_calculations/
-    │   ├── 04_prepare_gamess_input.py
-    │   ├── 05_calculate_camm.py
-    │   ├── 06_calculate_das.py
-    │   └── external/
-    │       └── das_dispersion_core.py
-    |   └── visualization/
-    |       ├── 07_plot_dtss_heatmaps.py
-    |       ├── 08_plot_das_camm_components.py
-    |       └── 09_plot_dtss_sequence_logos.py
-    |   
-    └── automated_data_analysis/
-            ├── deamination_analysis.ipynb
-            └── deamination_results.csv
+|   ├── model_preparation/
+|   │   ├── 01_mutate_ssdna.py
+|   │   ├── 02_generate_all_mutants.py
+|   │   └── 03_extract_mutated_bases.py
+|   │
+|   ├── energy_calculations/
+|   │   ├── 04_prepare_gamess_input.py
+|   │   ├── 05_calculate_camm.py
+|   │   ├── 06_calculate_das.py
+|   │   └── external/
+|   │       └── das_dispersion_core.py
+|   │
+|   └── visualization/
+|       ├── 07_plot_dtss_heatmaps.py
+|       ├── 08_plot_das_camm_components.py
+|       └── 09_plot_dtss_sequence_logos.py
+|   
+└── automated_data_analysis/
+      ├── deamination_analysis.ipynb
+      └── deamination_results.csv
  </code></pre>
 
         <p class="repo-note">
