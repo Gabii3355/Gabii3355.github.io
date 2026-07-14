@@ -130,13 +130,6 @@ Create the Conda environment:
 conda env create -f environment.yml
 conda activate formic-acid-mlp
 ```
-
-Alternatively, install only the basic Python dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
 ## Example usage
 
 Convert ORCA AIMD data:
