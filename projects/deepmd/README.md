@@ -224,3 +224,7 @@ The scripts used in this project were adapted and modified for the formic acid d
 [DeepMD-kit Handson-Tutorial v2.0.3](https://tutorials.deepmodeling.com/en/latest/Tutorials/DeePMD-kit/learnDoc/Handson-Tutorial%28v2.0.3%29.html)
 
 The original tutorial presents the general DeePMD-kit workflow, including data preparation, model training and model application. In this project, the workflow was adjusted to ORCA AIMD data for the formic acid dimer, with the 500 K trajectory used for training and the 298 K trajectory used for validation and testing.
+
+TODO:
+-> dodac prawidlowy folder z notebook pliki inputowe i nazwac folder automated_costam
+-> zmienic w readme i na stronie zmiane wygladu repository i dopsiac ze w tym folderze jest zautomatyzowany proces tych obliczen
