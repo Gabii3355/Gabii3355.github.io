@@ -210,14 +210,6 @@ master-thesis/
 ├── thesis.pdf
 ├── requirements.txt
 │
-├── data/
-│   ├── thesis_results.csv
-│   ├── thesis_results_with_DTSS.csv
-│   └── favorable_nucleotides.csv
-│
-├── notebooks/
-│   └── deamination_analysis.ipynb
-│
 ├── figures/
 │   ├── DNA-scheme.png
 │   ├── DNA-scheme-ADNA.png
