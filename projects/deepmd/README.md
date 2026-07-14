@@ -3,7 +3,7 @@
 This project presents a machine learning interatomic potential for the formic acid dimer (FAD).  
 The workflow combines ab initio molecular dynamics data, DeepMD-kit model training and molecular dynamics simulations in LAMMPS.
 
-The aim of the project was to prepare ORCA AIMD data, convert molecular trajectories into the DeepMD format, train a neural network potential and test whether the trained model can reproduce reference energies and forces for an independent validation set.
+The aim of the project was to prepare ORCA AIMD (ab initio molecular dynamics trajectories) data, convert molecular trajectories into the DeepMD format, train a neural network potential and test whether the trained model can reproduce reference energies and forces for an independent validation set.
 
 ## Project overview
 
