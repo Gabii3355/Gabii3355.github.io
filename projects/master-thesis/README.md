@@ -282,8 +282,8 @@ master-thesis/
 Clone the repository:
 
 ```bash
-git clone https://github.com/USERNAME/REPOSITORY_NAME.git
-cd REPOSITORY_NAME
+git clone https://github.com/Gabii3355/Gabii3355.github.io.git
+cd Gabii3355.github.io/projects/master-thesis/automated_data_analysis
 ```
 
 Install the required Python packages:
@@ -301,19 +301,12 @@ jupyter lab
 Open:
 
 ```text
-notebooks/deamination_analysis.ipynb
+automated_data_analysis/deamination_analysis.ipynb
 ```
 
 and run all cells.
 
-If the notebook and CSV file are stored in separate folders, the input path inside the notebook should point to:
-
-```python
-from pathlib import Path
-
-DATA_PATH = Path("../data/thesis_results.csv")
-FIGURES_DIR = Path("../figures")
-```
+The notebook and CSV file need to be stored in the same folder
 
 ## Opening the notebook in Google Colab
 
@@ -322,43 +315,10 @@ The notebook can also be opened directly in Google Colab using the badge at the 
 When running the notebook in Colab, clone the repository first:
 
 ```python
-!git clone https://github.com/USERNAME/REPOSITORY_NAME.git
-%cd REPOSITORY_NAME/notebooks
+git clone https://github.com/Gabii3355/Gabii3355.github.io.git
+%cd Gabii3355.github.io/projects/master-thesis/automated_data_analysis
 ```
-
-The CSV file can then be accessed using:
-
-```python
-from pathlib import Path
-
-DATA_PATH = Path("../data/thesis_results.csv")
-```
-
 Changes made during a Colab session are not automatically saved back to GitHub.
-
-## Python requirements
-
-The data-analysis notebook uses:
-
-- Python 3,
-- pandas,
-- numpy,
-- matplotlib,
-- JupyterLab.
-
-Optional plotting scripts may additionally use:
-
-- seaborn.
-
-Example `requirements.txt`:
-
-```text
-pandas
-numpy
-matplotlib
-seaborn
-jupyterlab
-```
 
 ## External software used in the original workflow
 
