@@ -25,7 +25,7 @@ The portfolio is available through GitHub Pages:
 │   └── portfolio_start.css
 └── projects/
     ├── master-thesis/
-    ├── deepmd/
+    ├── formic_acid_mlp/
     └── protein-ml/
 
 ```
