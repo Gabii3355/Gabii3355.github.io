@@ -2,7 +2,7 @@
 
 This repository contains my personal portfolio website focused on bioinformatics, computational chemistry, molecular modeling and data analysis.
 
-The website presents my background, selected skills, CV and scientific projects. It is built as a static website using HTML and CSS, with a simple folder structure that allows each project to have its own dedicated page.
+The website presents my background, selected skills and scientific projects.
 
 ## Live Website
 
@@ -25,24 +25,20 @@ The portfolio is available through GitHub Pages:
 │   └── portfolio_start.css
 └── projects/
     ├── master-thesis/
-    ├── formic_acid_mlp/
+    ├── formic_acid_mlp/ 
+    ├── fast-qc/
+    ├── NMR_oils/
     └── protein-ml/
-
 ```
-
 ## Main Sections
 
 ### Home
 
-The home page introduces my academic and scientific background, including my interests in bioinformatics, molecular modeling, computational chemistry and machine learning.
-
-### CV
-
-The CV section allows visitors to view or download my current CV in PDF format.
+The home page introduces my academic and scientific background, including my interests in bioinformatics, molecular modeling, computational chemistry, data analysis and machine learning.
 
 ### Portfolio
 
-The portfolio section contains selected projects. Each project has its own folder and dedicated page, which makes the website easier to extend and maintain.
+The portfolio section contains selected projects. Each project has its own folder and dedicated page.
 
 ## Projects
 
@@ -56,6 +52,10 @@ A molecular modeling and machine learning project based on the preparation and v
 
 ### FASTQ Quality Control in R
 Bioinformatics project focused on sequencing read quality analysis, filtering and trimming of FASTQ data.
+### NMR oils analysis
+**TBD**
+### bpti analysis using ML 
+**TBD**
 
 ## Technologies Used
 
@@ -63,11 +63,10 @@ Bioinformatics project focused on sequencing read quality analysis, filtering an
 * CSS
 * Git and GitHub
 * GitHub Pages
-* Python for scientific data analysis in project repositories
 
 ## Purpose
 
-The goal of this portfolio is to present my scientific projects in a clear and reproducible way. It is also intended to show my ability to connect chemistry, biological questions, computational tools and data analysis.
+The goal of this portfolio is to present my scientific projects in a legible and reproducible way. It is also intended to show my ability to connect chemistry, biological questions, computational tools and data analysis.
 
 ## Author
 
