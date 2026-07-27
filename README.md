@@ -54,7 +54,7 @@ A molecular modeling and machine learning project based on the preparation and v
 Bioinformatics project focused on sequencing read quality analysis, filtering and trimming of FASTQ data.
 ### NMR oils analysis
 **TBD**
-### bpti analysis using ML 
+### bpti analysis using MD
 **TBD**
 
 ## Technologies Used
