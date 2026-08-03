@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="NMR analysis of edible oils using Python, MySQL, PCA, K-means and KNN classification."
+  />
+  <title>NMR Analysis of Edible Oils | Gabriela Bieda</title>
+  <link rel="stylesheet" href="../../css/main.css" />
+  <link rel="stylesheet" href="nmr.css" />
+</head>
+
+<body>
+  <div class="site">
+    <header class="topbar">
+      <a class="brand" href="../../index.html#home" aria-label="Go to home page">
+        <span class="brand-mark">GB</span>
+        <span>
+          <strong>Gabriela Bieda</strong>
+          <small>Bioinformatics · Chemistry · IT</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link" href="../../index.html#home">Home</a>
+        <a class="nav-link" href="../../index.html#cv">CV</a>
+        <a class="nav-link" href="../../index.html#portfolio">Portfolio</a>
+        <a class="nav-link" href="../../index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="project-layout">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-content">
+          <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
+          <p class="eyebrow">Data analysis · NMR · SQL · Machine learning</p>
+
+          <h1 id="project-title">NMR analysis of edible oils</h1>
+
+          <p class="lead">
+            A reproducible workflow for preparing, storing and analysing NMR measurements
+            from amaranth, pomegranate and sea buckthorn oils.
+          </p>
+
+          <p class="hero-note">
+            The project combines data cleaning, KNN imputation, a normalized MySQL database,
+            statistical testing, PCA, K-means clustering and leave-one-manufacturer-out KNN classification.
+          </p>
+
+          <div class="method-badge-row" aria-label="Main project methods">
+            <span>Python</span>
+            <span>MySQL</span>
+            <span>Statistical analysis</span>
+            <span>PCA</span>
+            <span>K-means</span>
+            <span>KNN</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="github-button" href="README.md">Read project README</a>
+            <a class="github-button github-button-secondary" href="notebooks/03_multivariate_analysis.ipynb">
+              Open analysis notebook
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visuals" aria-label="PCA preview">
+          <figure class="hero-figure hero-figure-single">
+            <img
+              src="diagrams/03/pca_score_plot.png"
+              alt="PCA score plot separating the three investigated oil types"
+            />
+            <figcaption class="carousel-caption">
+              PCA score plot showing clear separation of the three oil types.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section research-section" aria-labelledby="research-question-title">
+        <p class="eyebrow">Project aim</p>
+        <h2 id="research-question-title">
+          Can NMR profiles distinguish oil types across different manufacturers?
+        </h2>
+
+        <p>
+          The analysis tests whether numerical NMR profiles contain reproducible patterns that can
+          separate the three investigated oils, identify informative chemical shifts and classify
+          samples from manufacturers excluded from model training.
+        </p>
+
+        <div class="research-grid" aria-label="Project objectives">
+          <article class="research-card">
+            <span>01</span>
+            <h3>Prepare reliable data</h3>
+            <p>
+              Inspect metadata, remove duplicated analytical records and complete missing NMR values
+              without altering the oil labels.
+            </p>
+          </article>
+
+          <article class="research-card">
+            <span>02</span>
+            <h3>Build a relational workflow</h3>
+            <p>
+              Transform the wide NMR table into normalized MySQL tables and execute reusable queries
+              stored in a separate SQL file.
+            </p>
+          </article>
+
+          <article class="research-card">
+            <span>03</span>
+            <h3>Evaluate separation and prediction</h3>
+            <p>
+              Use statistical tests, PCA, K-means and grouped KNN validation to examine descriptive
+              and predictive differences between oils.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="dataset-title">
+        <p class="eyebrow">Dataset</p>
+        <h2 id="dataset-title">Educational NMR dataset</h2>
+
+        <p class="section-lead">
+          The measurements were provided by the course instructor. The original experimental source,
+          sample-preparation protocol, measurement conditions and NMR acquisition parameters were not supplied.
+          The project therefore focuses on computational analysis of the provided numerical values.
+        </p>
+
+        <div class="metric-grid dataset-metrics">
+          <article class="metric-card">
+            <span>Raw records</span>
+            <strong>150</strong>
+            <p>Measurements before duplicate removal.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Processed records</span>
+            <strong>149</strong>
+            <p>One duplicated analytical profile was removed.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>NMR variables</span>
+            <strong>22</strong>
+            <p>Chemical-shift intensity variables used in the analyses.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Oil types</span>
+            <strong>3</strong>
+            <p>Amaranth, pomegranate and sea buckthorn oils.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Manufacturers</span>
+            <strong>4</strong>
+            <p>Used as groups in leave-one-manufacturer-out validation.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Raw missing values</span>
+            <strong>98</strong>
+            <p>Distributed across seven NMR variables.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="workflow-title">
+        <p class="eyebrow">Workflow</p>
+        <h2 id="workflow-title">From raw CSV to multivariate interpretation</h2>
+
+        <ol class="workflow-list">
+          <li>Load the raw NMR dataset and inspect its structure, metadata and class distribution.</li>
+          <li>Detect duplicated analytical profiles and retain 149 unique processed records.</li>
+          <li>Analyse missing values and complete NMR intensities using KNN imputation.</li>
+          <li>Save the validated dataset as <code>oils_processed.csv</code>.</li>
+          <li>Create normalized MySQL tables for sample metadata and individual NMR measurements.</li>
+          <li>Execute named SQL queries for counts, summaries, rankings and manufacturer-level reporting.</li>
+          <li>Screen NMR variables with statistical tests and FDR correction.</li>
+          <li>Analyse correlation structure and reduce dimensionality with PCA.</li>
+          <li>Evaluate unsupervised grouping with K-means clustering.</li>
+          <li>Classify oil type using leave-one-manufacturer-out KNN validation.</li>
+        </ol>
+      </section>
+
+      <section class="project-section" aria-labelledby="methodology-title">
+        <p class="eyebrow">Methodology</p>
+        <h2 id="methodology-title">Three connected notebooks</h2>
+
+        <div class="methodology-grid methodology-grid-three">
+          <article class="methodology-card">
+            <span class="step-number">01</span>
+            <h3>Data preparation</h3>
+            <p>
+              Duplicate detection, missing-value analysis, imputation, date standardization,
+              validation and processed-data export.
+            </p>
+            <a class="card-link" href="notebooks/01_data_preparation.ipynb">Open notebook 01</a>
+          </article>
+
+          <article class="methodology-card">
+            <span class="step-number">02</span>
+            <h3>SQL analysis</h3>
+            <p>
+              Relational DataFrames, MySQL schema creation, data insertion, external SQL queries,
+              joins, aggregations, CTEs and window functions.
+            </p>
+            <a class="card-link" href="notebooks/02_sql_analysis.ipynb">Open notebook 02</a>
+          </article>
+
+          <article class="methodology-card">
+            <span class="step-number">03</span>
+            <h3>Multivariate analysis</h3>
+            <p>
+              Statistical screening, volcano plots, correlations, PCA, K-means and grouped
+              KNN classification.
+            </p>
+            <a class="card-link" href="notebooks/03_multivariate_analysis.ipynb">Open notebook 03</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="technologies-title">
+        <p class="eyebrow">Technologies</p>
+        <h2 id="technologies-title">Tools used in the project</h2>
+
+        <div class="tech-grid" aria-label="Technologies used">
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🐍</span>
+            <strong>Python</strong>
+            <p class="tech-tooltip">Used to organize the workflow and connect preprocessing, SQL and machine learning.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📊</span>
+            <strong>pandas</strong>
+            <p class="tech-tooltip">Used for cleaning, reshaping, validating and summarizing tabular NMR data.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🔢</span>
+            <strong>NumPy</strong>
+            <p class="tech-tooltip">Used for numerical arrays, transformations and matrix operations.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🧮</span>
+            <strong>SciPy</strong>
+            <p class="tech-tooltip">Used for Kruskal-Wallis and Welch pairwise statistical tests.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🗄️</span>
+            <strong>MySQL</strong>
+            <p class="tech-tooltip">Used to create and query normalized relational tables.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🧾</span>
+            <strong>SQL</strong>
+            <p class="tech-tooltip">Used for joins, aggregations, CTEs, CASE expressions and window functions.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🤖</span>
+            <strong>scikit-learn</strong>
+            <p class="tech-tooltip">Used for imputation, scaling, PCA, clustering, KNN and grouped validation.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📈</span>
+            <strong>Matplotlib</strong>
+            <p class="tech-tooltip">Used for publication-style scientific plots.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🎨</span>
+            <strong>Seaborn</strong>
+            <p class="tech-tooltip">Used for heatmaps, score plots, distributions and result summaries.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📓</span>
+            <strong>JupyterLab</strong>
+            <p class="tech-tooltip">Used to combine code, outputs, interpretation and reproducible documentation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="preparation-title">
+        <p class="eyebrow">Notebook 01</p>
+        <h2 id="preparation-title">Data quality and preparation</h2>
+
+        <p class="section-lead">
+          Seven NMR variables contained missing observations. The largest number occurred at
+          <strong>6.45 ppm</strong>, where 54 of the 150 raw values were missing.
+          KNN imputation produced a complete NMR matrix while preserving oil labels and record counts.
+        </p>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/01/class_distribution.png"
+              alt="Number of samples for the three oil types"
+            />
+            <figcaption>
+              <strong>Class distribution</strong>
+              The processed dataset is nearly balanced: 50 amaranth, 49 pomegranate and
+              50 sea buckthorn samples.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/01/missing_values_heatmap.png"
+              alt="Heatmap of missing values in the raw NMR dataset"
+            />
+            <figcaption>
+              <strong>Missing-value pattern</strong>
+              Missing values are concentrated in selected spectral variables instead of appearing
+              uniformly across the dataset.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="sql-title">
+        <p class="eyebrow">Notebook 02</p>
+        <h2 id="sql-title">Normalized MySQL analysis</h2>
+
+        <p class="section-lead">
+          The processed table was transformed into a relational structure with 149 rows in
+          <code>samples</code> and 3,278 rows in <code>nmr_measurements</code>.
+          The tables are connected through a foreign key on <code>sample_id</code>.
+        </p>
+
+        <div class="metric-grid metric-grid-four">
+          <article class="metric-card">
+            <span>Sample rows</span>
+            <strong>149</strong>
+            <p>One row per processed analytical record.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>NMR rows</span>
+            <strong>3,278</strong>
+            <p>One intensity per sample and chemical shift.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Tables</span>
+            <strong>2</strong>
+            <p><code>samples</code> and <code>nmr_measurements</code>.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>Manufacturers</span>
+            <strong>4</strong>
+            <p>A, B, C and D represented in the database.</p>
+          </article>
+        </div>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/02/sql_mean_intensity_by_oil.png"
+              alt="Mean NMR intensity profiles calculated with SQL"
+            />
+            <figcaption>
+              <strong>Mean NMR profiles</strong>
+              SQL aggregation reveals different intensity patterns across the three oil types.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/02/sql_signal_ranking.png"
+              alt="SQL ranking of NMR signals by mean intensity"
+            />
+            <figcaption>
+              <strong>Signal ranking</strong>
+              The strongest signals are ranked directly from the normalized measurement table.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="section-actions">
+          <a class="github-button" href="sql/oils_analysis.sql">View SQL queries</a>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="statistics-title">
+        <p class="eyebrow">Statistical analysis</p>
+        <h2 id="statistics-title">Discriminative NMR variables</h2>
+
+        <p class="section-lead">
+          Each NMR variable was screened with the Kruskal-Wallis test and Benjamini-Hochberg
+          FDR correction. Pairwise volcano plots then combined Welch’s t-test, FDR and
+          log2 mean-ratio thresholds.
+        </p>
+
+        <div class="results-grid results-grid-vertical volcano-grid">
+          <figure class="result-card result-card-vertical">
+            <img
+              src="diagrams/03/volcano_amaranth_oil_vs_pomegranate_oil.png"
+              alt="Volcano plot comparing amaranth and pomegranate oils"
+            />
+            <figcaption>
+              <strong>Amaranth vs pomegranate</strong>
+              Pairwise differences between spectral variables after FDR correction.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-vertical">
+            <img
+              src="diagrams/03/volcano_amaranth_oil_vs_sea_buckthorn_oil.png"
+              alt="Volcano plot comparing amaranth and sea buckthorn oils"
+            />
+            <figcaption>
+              <strong>Amaranth vs sea buckthorn</strong>
+              Several chemical shifts show large and statistically significant mean differences.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-vertical">
+            <img
+              src="diagrams/03/volcano_pomegranate_oil_vs_sea_buckthorn_oil.png"
+              alt="Volcano plot comparing pomegranate and sea buckthorn oils"
+            />
+            <figcaption>
+              <strong>Pomegranate vs sea buckthorn</strong>
+              The comparison identifies spectral markers contributing to class separation.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="multivariate-title">
+        <p class="eyebrow">Multivariate analysis</p>
+        <h2 id="multivariate-title">Correlation structure and PCA</h2>
+
+        <p class="section-lead">
+          Strong correlations between several NMR variables indicate partially redundant spectral
+          information. PCA compresses the 22 variables while retaining most of the dataset variance.
+        </p>
+
+        <div class="metric-grid metric-grid-four">
+          <article class="metric-card">
+            <span>PC1</span>
+            <strong>64.71%</strong>
+            <p>Largest proportion of explained variance.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>PC2</span>
+            <strong>30.75%</strong>
+            <p>Additional orthogonal separation.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>PC1 + PC2</span>
+            <strong>95.46%</strong>
+            <p>Total variance retained in the main score plot.</p>
+          </article>
+
+          <article class="metric-card">
+            <span>PC1–PC3</span>
+            <strong>98.54%</strong>
+            <p>Cumulative variance after the third component.</p>
+          </article>
+        </div>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/03/correlation_heatmap.png"
+              alt="Correlation heatmap of NMR variables"
+            />
+            <figcaption>
+              <strong>Correlation heatmap</strong>
+              Groups of highly correlated signals reveal redundancy in the full spectral profile.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/03/pca_score_plot.png"
+              alt="PCA score plot of NMR oil samples"
+            />
+            <figcaption>
+              <strong>PCA score plot</strong>
+              PC1 and PC2 clearly separate the three investigated oil groups.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-span">
+            <img
+              src="diagrams/03/pca_biplot.png"
+              alt="PCA biplot with influential NMR variables"
+            />
+            <figcaption>
+              <strong>PCA biplot</strong>
+              Loading vectors connect group separation with influential chemical shifts,
+              including 5.34, 0.90, 6.05, 6.45, 2.19 and 5.69 ppm.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="ml-title">
+        <p class="eyebrow">Clustering and classification</p>
+        <h2 id="ml-title">Do the patterns support prediction?</h2>
+
+        <p class="section-lead">
+          K-means tests whether the structure appears without class labels, while KNN evaluates
+          supervised prediction for manufacturers excluded from training.
+        </p>
+
+        <div class="results-grid results-grid-main">
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/03/kmeans_clusters.png"
+              alt="K-means clusters in PCA space"
+            />
+            <figcaption>
+              <strong>K-means clustering</strong>
+              Three clusters reproduce the natural oil grouping with a silhouette score of
+              0.916 and adjusted Rand index of 1.000.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img
+              src="diagrams/03/knn_confusion_matrix.png"
+              alt="KNN leave-one-manufacturer-out confusion matrix"
+            />
+            <figcaption>
+              <strong>KNN classification</strong>
+              All samples were correctly classified in leave-one-manufacturer-out validation
+              within this dataset.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="analysis-note">
+          <strong>Interpretation note</strong>
+          <p>
+            Perfect classification reflects the strong separation of these three supplied oil groups.
+            It is dataset-specific and should not be treated as universal performance for other oils,
+            laboratories or acquisition conditions.
+          </p>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="findings-title">
+        <p class="eyebrow">Key findings</p>
+        <h2 id="findings-title">Main conclusions</h2>
+
+        <div class="findings-list">
+          <details class="finding-card" open>
+            <summary>Finding 1</summary>
+            <div>
+              <h3>The three oils have clearly different NMR profiles.</h3>
+              <p>
+                Statistical comparisons, PCA, clustering and classification all support strong
+                separation between amaranth, pomegranate and sea buckthorn oils.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 2</summary>
+            <div>
+              <h3>Most variation is captured by two principal components.</h3>
+              <p>
+                PC1 and PC2 explain 95.46% of total variance and provide stronger class separation
+                than the PC1–PC3 projection.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 3</summary>
+            <div>
+              <h3>Unsupervised clustering reproduces the known classes.</h3>
+              <p>
+                K-means with three clusters gives a silhouette score of 0.916 and an adjusted
+                Rand index of 1.000.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 4</summary>
+            <div>
+              <h3>Classification remains perfect with reduced feature sets.</h3>
+              <p>
+                Leave-one-manufacturer-out KNN achieved 100% accuracy using all signals,
+                selected PCA-loading signals and even the strongest individual signal.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>Finding 5</summary>
+            <div>
+              <h3>The result requires cautious interpretation.</h3>
+              <p>
+                The dataset contains only three strongly separated oil types and four manufacturers,
+                with no independent experimental dataset available for external validation.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="repo-title">
+        <p class="eyebrow">Repository</p>
+        <h2 id="repo-title">Project structure</h2>
+
+        <p class="section-lead">
+          The repository separates raw and processed data, notebooks, reusable SQL queries
+          and exported figures.
+        </p>
+
+        <pre class="repo-tree"><code>nmr-oils-analysis/
+├── index.html
+├── nmr.css
+├── README.md
+├── data/
+│   ├── raw/
+│   │   └── oils_nmr.csv
+│   └── processed/
+│       └── oils_processed.csv
+├── notebooks/
+│   ├── 01_data_preparation.ipynb
+│   ├── 02_sql_analysis.ipynb
+│   └── 03_multivariate_analysis.ipynb
+├── sql/
+│   └── oils_analysis.sql
+├── diagrams/
+│   ├── 01/
+│   │   ├── class_distribution.png
+│   │   └── missing_values_heatmap.png
+│   ├── 02/
+│   │   ├── sql_mean_intensity_by_oil.png
+│   │   └── sql_signal_ranking.png
+│   └── 03/
+│       ├── correlation_heatmap.png
+│       ├── pca_score_plot.png
+│       ├── pca_biplot.png
+│       ├── kmeans_clusters.png
+│       ├── knn_confusion_matrix.png
+│       └── volcano_*.png
+├── .env.example
+└── .gitignore</code></pre>
+
+        <div class="section-actions">
+          <a class="github-button" href="README.md">Open README</a>
+          <a class="github-button github-button-secondary" href="sql/oils_analysis.sql">Open SQL file</a>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="challenges-title">
+        <p class="eyebrow">Challenges</p>
+        <h2 id="challenges-title">What made this project challenging?</h2>
+
+        <div class="challenge-grid">
+          <article class="challenge-card">
+            <span>01</span>
+            <h3>Missing NMR values</h3>
+            <p>
+              The missing-value pattern required a method that preserved all samples and could be
+              fitted safely inside machine-learning validation.
+            </p>
+          </article>
+
+          <article class="challenge-card">
+            <span>02</span>
+            <h3>Relational data design</h3>
+            <p>
+              A wide analytical table had to be transformed into normalized sample and measurement
+              tables without losing links to metadata.
+            </p>
+          </article>
+
+          <article class="challenge-card">
+            <span>03</span>
+            <h3>Avoiding leakage</h3>
+            <p>
+              Imputation, scaling, feature selection and parameter tuning had to be performed
+              without access to the held-out manufacturer.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section" aria-labelledby="learned-title">
+        <p class="eyebrow">What I learned</p>
+        <h2 id="learned-title">Skills developed during the project</h2>
+
+        <div class="learned-grid">
+          <article>Data-quality assessment</article>
+          <article>KNN imputation</article>
+          <article>Relational database design</article>
+          <article>Analytical SQL</article>
+          <article>Statistical testing and FDR</article>
+          <article>PCA interpretation</article>
+          <article>K-means clustering</article>
+          <article>Grouped ML validation</article>
+          <article>Scientific visualization</article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close image preview">×</button>
+    <img id="lightbox-image" src="" alt="" />
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.querySelector(".lightbox-close");
+      const previewImages = document.querySelectorAll(".result-card img, .hero-figure img");
+
+      previewImages.forEach((image) => {
+        image.addEventListener("click", () => {
+          lightboxImage.src = image.src;
+          lightboxImage.alt = image.alt;
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+          document.body.classList.add("lightbox-open");
+        });
+
+        image.addEventListener("error", () => {
+          image.classList.add("image-load-error");
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+        document.body.classList.remove("lightbox-open");
+      }
+
+      closeButton.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
