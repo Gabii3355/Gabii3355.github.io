@@ -8,7 +8,7 @@ The website presents my background, selected skills and scientific projects.
 
 The portfolio is available through GitHub Pages:
 
-[Open portfolio website](https://https://gabii3355.github.io/)
+[Open portfolio website](gabii3355.github.io)
 
 ## Repository Structure
 
