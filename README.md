@@ -6,9 +6,7 @@ The website presents my background, selected skills and scientific projects.
 
 ## Live Website
 
-The portfolio is available through GitHub Pages:
-
-[Open portfolio website](Gabii3355.github.io)
+The portfolio is available through GitHub Pages: Gabii3355.github.io
 
 ## Repository Structure
 
