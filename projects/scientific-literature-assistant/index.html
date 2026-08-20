@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Scientific Literature Assistant — a lightweight RAG application for asking evidence-grounded questions about scientific PDFs using BM25Plus, Groq reranking and cited answers." />
+
+  <title>Scientific Literature Assistant | Gabriela Bieda</title>
+
+  <link rel="stylesheet" href="../../css/main.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <div class="site">
+    <header class="topbar">
+      <a class="brand" href="../../index.html#home" aria-label="Go to home page">
+        <span class="brand-mark">GB</span>
+        <span>
+          <strong>Gabriela Bieda</strong>
+          <small>Bioinformatics · Chemistry · IT</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link" href="../../index.html#home">Home</a>
+        <a class="nav-link" href="../../index.html#cv">CV</a>
+        <a class="nav-link" href="../../index.html#portfolio">Portfolio</a>
+        <a class="nav-link" href="../../index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="project-layout">
+      <section class="project-hero reveal" aria-labelledby="project-title">
+        <div class="hero-content">
+          <a class="back-link" href="../../index.html#portfolio">← Back to portfolio</a>
+
+          <p class="eyebrow">AI · NLP · Scientific computing</p>
+          <h1 id="project-title">Scientific Literature Assistant</h1>
+
+          <p class="lead">
+            A lightweight Retrieval-Augmented Generation application for asking questions about scientific PDF papers and receiving answers grounded in retrieved evidence with page-level citations.
+          </p>
+
+          <p class="hero-note">
+            The project combines local PDF processing and BM25Plus retrieval with Groq-based semantic reranking and answer generation. It was intentionally designed without large local embedding models, PyTorch or FAISS, keeping the environment compact and easy to run.
+          </p>
+
+          <div class="method-badge-row" aria-label="Main project methods">
+            <span>Python</span>
+            <span>RAG</span>
+            <span>BM25Plus</span>
+            <span>Groq API</span>
+            <span>Streamlit</span>
+            <span>Scientific PDFs</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="github-button primary-button" href="https://github.com/Gabii3355/Gabii3355.github.io/tree/main/projects/scientific-literature-assistant" target="_blank" rel="noopener noreferrer">
+              View repository
+            </a>
+            <a class="github-button" href="#demo">See demo</a>
+          </div>
+        </div>
+
+        <aside class="hero-rag-card" aria-label="RAG workflow preview">
+          <div class="mini-window-bar">
+            <span></span><span></span><span></span>
+            <small>literature_assistant.py</small>
+          </div>
+
+          <div class="hero-query">
+            <span>QUESTION</span>
+            <strong>What was the main objective of this study?</strong>
+          </div>
+
+          <div class="mini-pipeline" aria-hidden="true">
+            <div class="mini-step active"><b>01</b><span>Retrieve</span></div>
+            <div class="mini-arrow">→</div>
+            <div class="mini-step"><b>02</b><span>Rerank</span></div>
+            <div class="mini-arrow">→</div>
+            <div class="mini-step"><b>03</b><span>Answer</span></div>
+          </div>
+
+          <div class="hero-answer-preview">
+            <span class="answer-label">GROUNDED ANSWER</span>
+            <p>
+              The study catalogued known and previously unreported mutational signatures across large cancer WGS cohorts.
+            </p>
+            <code>[2022_Science.pdf, p. 5]</code>
+          </div>
+
+          <div class="status-row">
+            <span class="status-dot"></span>
+            <small>Evidence retrieved · source traceable</small>
+          </div>
+        </aside>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="goal-title">
+        <p class="eyebrow">Project goal</p>
+        <h2 id="goal-title">How can scientific papers become easier to query without losing the link to the original evidence?</h2>
+
+        <p class="section-lead">
+          The application was built as a practical literature assistant: it reads locally stored PDFs, retrieves the most relevant passages for a question, reranks them semantically and generates a concise answer with citations pointing back to the source pages.
+        </p>
+
+        <div class="research-grid" aria-label="Project objectives">
+          <article class="research-card reveal" data-delay="60">
+            <span>01</span>
+            <h3>Ground answers in evidence</h3>
+            <p>Answers are generated from retrieved passages instead of relying only on the language model's general knowledge.</p>
+          </article>
+
+          <article class="research-card reveal" data-delay="120">
+            <span>02</span>
+            <h3>Keep the setup lightweight</h3>
+            <p>BM25Plus avoids local embedding models, reducing disk and memory requirements while keeping retrieval transparent.</p>
+          </article>
+
+          <article class="research-card reveal" data-delay="180">
+            <span>03</span>
+            <h3>Make sources inspectable</h3>
+            <p>The Streamlit interface exposes the selected passages, retrieval scores and exact PDF page references.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="architecture-title">
+        <p class="eyebrow">Architecture</p>
+        <h2 id="architecture-title">A hybrid local + API retrieval pipeline</h2>
+
+        <p class="section-lead">
+          Most document processing happens locally. Groq is used only where semantic understanding adds the most value: reranking candidate passages and writing the final cited answer.
+        </p>
+
+        <div class="pipeline-track" aria-label="RAG processing pipeline">
+          <article class="pipeline-node">
+            <span class="pipeline-number">01</span>
+            <div class="pipeline-icon">PDF</div>
+            <h3>Read papers</h3>
+            <p><code>pypdf</code> extracts text page by page from local PDF files.</p>
+          </article>
+
+          <article class="pipeline-node">
+            <span class="pipeline-number">02</span>
+            <div class="pipeline-icon">TXT</div>
+            <h3>Clean & chunk</h3>
+            <p>Text is normalized and split into overlapping 220-word fragments.</p>
+          </article>
+
+          <article class="pipeline-node">
+            <span class="pipeline-number">03</span>
+            <div class="pipeline-icon">BM25</div>
+            <h3>Retrieve</h3>
+            <p>BM25Plus scores candidate chunks using expanded query terms.</p>
+          </article>
+
+          <article class="pipeline-node accent-node">
+            <span class="pipeline-number">04</span>
+            <div class="pipeline-icon">AI</div>
+            <h3>Rerank</h3>
+            <p>Groq selects passages that directly support the user's question.</p>
+          </article>
+
+          <article class="pipeline-node accent-node">
+            <span class="pipeline-number">05</span>
+            <div class="pipeline-icon">CITE</div>
+            <h3>Answer</h3>
+            <p>The model writes a concise answer using only retrieved evidence and page-level citations.</p>
+          </article>
+        </div>
+
+        <div class="architecture-note-grid">
+          <article>
+            <strong>No local LLM</strong>
+            <p>The generative model runs through the Groq API.</p>
+          </article>
+          <article>
+            <strong>No vector database</strong>
+            <p>The current version builds a BM25Plus index in memory.</p>
+          </article>
+          <article>
+            <strong>No PyTorch</strong>
+            <p>The minimal environment remains much smaller than an embedding-based stack.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="workflow-title">
+        <p class="eyebrow">Retrieval logic</p>
+        <h2 id="workflow-title">How a question becomes a cited answer</h2>
+
+        <ol class="workflow-list">
+          <li>The user asks a question about papers stored in <code>data/papers/</code>.</li>
+          <li>The query is tokenized and expanded with related terms such as <code>objective → aim, goal, purpose</code>.</li>
+          <li>BM25Plus retrieves a larger candidate set and applies local scoring heuristics.</li>
+          <li>Bibliography-like passages and near-duplicate chunks are filtered out.</li>
+          <li>Groq semantically reranks the strongest candidates and selects the final evidence passages.</li>
+          <li>The answer model receives only those passages and is instructed not to use outside knowledge.</li>
+          <li>Each factual claim is accompanied by a citation such as <code>[paper.pdf, p. 11]</code>.</li>
+        </ol>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="technologies-title">
+        <p class="eyebrow">Technologies</p>
+        <h2 id="technologies-title">Tools used in the project</h2>
+
+        <div class="tech-grid" aria-label="Technologies used">
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🐍</span>
+            <strong>Python</strong>
+            <p class="tech-tooltip">Core application logic, PDF processing, retrieval and API integration.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>📄</span>
+            <strong>pypdf</strong>
+            <p class="tech-tooltip">Extracts page-level text from scientific PDF files.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🔎</span>
+            <strong>BM25Plus</strong>
+            <p class="tech-tooltip">Lightweight lexical retrieval implemented through rank-bm25.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>⚡</span>
+            <strong>Groq</strong>
+            <p class="tech-tooltip">Provides semantic reranking and final answer generation through the API.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🖥️</span>
+            <strong>Streamlit</strong>
+            <p class="tech-tooltip">Interactive web interface for questions, answers and source inspection.</p>
+          </article>
+
+          <article class="tech-card tooltip-card" tabindex="0">
+            <span>🔐</span>
+            <strong>python-dotenv</strong>
+            <p class="tech-tooltip">Loads the Groq API key from a local .env file that is excluded from Git.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section reveal" id="demo" aria-labelledby="demo-title">
+        <p class="eyebrow">Application demo</p>
+        <h2 id="demo-title">From question to inspectable evidence</h2>
+
+        <p class="section-lead">
+          The Streamlit version shows the generated answer and keeps the supporting passages visible, making it possible to check whether the model is actually grounded in the paper.
+        </p>
+
+        <div class="results-grid results-grid-main rag-results">
+          <figure class="result-card result-card-wide">
+            <img src="figures/streamlit_answer.png" alt="Streamlit scientific literature assistant answer view" />
+            <figcaption>
+              <strong>Question and answer</strong>
+              The user asks about the study objective and receives a concise response generated from retrieved evidence.
+            </figcaption>
+          </figure>
+
+          <figure class="result-card result-card-wide">
+            <img src="figures/streamlit_source.png" alt="Retrieved source passage displayed in Streamlit" />
+            <figcaption>
+              <strong>Inspectable source passage</strong>
+              Retrieved text is shown with the source filename, page and retrieval score so the answer can be checked against the paper.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="versions-title">
+        <p class="eyebrow">Two interfaces</p>
+        <h2 id="versions-title">Terminal prototype and Streamlit application</h2>
+
+        <div class="version-tabs" role="tablist" aria-label="Application versions">
+          <button class="version-tab is-active" type="button" role="tab" aria-selected="true" data-target="terminal-panel">Terminal app</button>
+          <button class="version-tab" type="button" role="tab" aria-selected="false" data-target="streamlit-panel">Streamlit app</button>
+        </div>
+
+        <div class="version-panel is-active" id="terminal-panel" role="tabpanel">
+          <div class="terminal-window">
+            <div class="terminal-bar">
+              <span></span><span></span><span></span>
+              <small>app.py</small>
+            </div>
+            <pre><code>Scientific Literature Assistant
+========================================
+Wczytywanie: 2022_Science.pdf
+Liczba fragmentów: 98
+
+RAG jest gotowy.
+Wpisz 'exit', aby zakończyć.
+
+Pytanie: What methods were used in this study?
+
+ODPOWIEDŹ:
+...grounded response...
+
+ZNALEZIONE FRAGMENTY:
+1. 2022_Science.pdf | strona 3
+2. 2022_Science.pdf | strona 15</code></pre>
+          </div>
+          <p class="version-note">
+            <code>app.py</code> was the first working prototype. It helped validate PDF reading, chunking, retrieval and Groq generation before building a graphical interface.
+          </p>
+        </div>
+
+        <div class="version-panel" id="streamlit-panel" role="tabpanel" hidden>
+          <pre class="code-block"><code>candidate_chunks = retrieve(
+    question,
+    bm25,
+    chunks,
+    top_k=10,
+    candidate_k=30,
+)
+
+retrieved_chunks = rerank_with_groq(
+    question,
+    candidate_chunks,
+    top_k=4,
+)
+
+answer = ask_groq(
+    question,
+    retrieved_chunks,
+)</code></pre>
+          <p class="version-note">
+            <code>streamlit_app.py</code> extends the prototype with BM25Plus, local filtering, Groq semantic reranking, source inspection and claim-level citations.
+          </p>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="evaluation-title">
+        <p class="eyebrow">Current evaluation</p>
+        <h2 id="evaluation-title">How well does the current model work?</h2>
+
+        <p class="section-lead">
+          The current version works well as a compact prototype for targeted scientific Q&amp;A. The strongest aspect is traceability: retrieved passages can be inspected directly, and the answer prompt enforces evidence-based citations. The main limitations are retrieval semantics and PDF text quality.
+        </p>
+
+        <div class="evaluation-grid">
+          <article class="evaluation-card positive">
+            <div class="evaluation-topline"><span>Strong</span><strong>Evidence grounding</strong></div>
+            <p>For specific questions, the system usually retrieves passages that contain the information used in the answer.</p>
+          </article>
+
+          <article class="evaluation-card positive">
+            <div class="evaluation-topline"><span>Strong</span><strong>Citation traceability</strong></div>
+            <p>Page-level references and expandable source passages make it easy to verify model claims.</p>
+          </article>
+
+          <article class="evaluation-card moderate">
+            <div class="evaluation-topline"><span>Good</span><strong>Semantic reranking</strong></div>
+            <p>Groq often improves the lexical BM25 ordering by prioritizing passages that better answer the actual question.</p>
+          </article>
+
+          <article class="evaluation-card moderate">
+            <div class="evaluation-topline"><span>Needs work</span><strong>Broad synthesis</strong></div>
+            <p>Questions about broad conclusions can still mix detailed results with high-level takeaways if several sections are relevant.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="improvements-title">
+        <p class="eyebrow">Next steps</p>
+        <h2 id="improvements-title">What could be improved?</h2>
+
+        <div class="findings-list">
+          <details class="finding-card" open>
+            <summary>01 · Better semantic retrieval</summary>
+            <div>
+              <h3>Move from lexical-only retrieval toward a hybrid approach.</h3>
+              <p>
+                BM25Plus is lightweight and interpretable, but it can miss passages that use different vocabulary from the question. A future version could combine BM25 with embeddings when storage constraints are less important.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>02 · More robust PDF cleaning</summary>
+            <div>
+              <h3>Improve handling of figure labels, split characters and page artifacts.</h3>
+              <p>
+                Scientific PDFs often contain multi-column layouts, figure captions and broken spacing. Better document parsing would reduce noisy chunks before retrieval.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>03 · Question-aware answer strategies</summary>
+            <div>
+              <h3>Treat objectives, methods, results and conclusions differently.</h3>
+              <p>
+                Broad questions could benefit from dedicated prompts that prioritize explicit conclusion or discussion passages rather than individual detailed findings.
+              </p>
+            </div>
+          </details>
+
+          <details class="finding-card">
+            <summary>04 · Formal evaluation set</summary>
+            <div>
+              <h3>Measure retrieval and answer quality systematically.</h3>
+              <p>
+                A small benchmark of known questions and expected evidence pages would make it possible to compare retrieval variants using reproducible metrics instead of only manual inspection.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="repo-title">
+        <p class="eyebrow">Repository</p>
+        <h2 id="repo-title">Project structure</h2>
+
+        <p class="section-lead">
+          The repository keeps the runnable code small and excludes local virtual environments, API keys and copyrighted PDF papers.
+        </p>
+
+        <pre class="repo-tree"><code>scientific-literature-assistant-groq/
+├── app.py
+├── streamlit_app.py
+├── check_setup.py
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── README.md
+├── LICENSE
+├── data/
+│   └── papers/
+│       └── README.md
+└── docs/
+    └── screenshots/
+        ├── streamlit_answer.png
+        └── streamlit_source.png</code></pre>
+
+        <p class="repo-note">
+          The local <code>.env</code>, virtual environment and PDF files are intentionally excluded from Git. The repository only contains an <code>.env.example</code> template and instructions for adding personal papers locally.
+        </p>
+
+        <div class="section-actions">
+          <a class="github-button primary-button" href="https://github.com/Gabii3355/Gabii3355.github.io/tree/main/projects/scientific-literature-assistant" target="_blank" rel="noopener noreferrer">
+            Open GitHub repository
+          </a>
+        </div>
+      </section>
+
+      <section class="project-section reveal" aria-labelledby="learned-title">
+        <p class="eyebrow">What I learned</p>
+        <h2 id="learned-title">Skills developed during the project</h2>
+
+        <div class="learned-grid">
+          <article>Retrieval-Augmented Generation</article>
+          <article>Scientific PDF processing</article>
+          <article>BM25 information retrieval</article>
+          <article>LLM reranking</article>
+          <article>Prompt grounding & citations</article>
+          <article>Streamlit application design</article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close image preview">×</button>
+    <img id="lightbox-image" src="" alt="" />
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Scroll progress
+      const progress = document.getElementById("scroll-progress");
+      const updateProgress = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+        progress.style.transform = `scaleX(${ratio})`;
+      };
+      updateProgress();
+      window.addEventListener("scroll", updateProgress, { passive: true });
+
+      // Reveal on scroll
+      const revealItems = document.querySelectorAll(".reveal");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduceMotion) {
+        revealItems.forEach((item) => item.classList.add("is-visible"));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const delay = Number(entry.target.dataset.delay || 0);
+              window.setTimeout(() => entry.target.classList.add("is-visible"), delay);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealItems.forEach((item) => observer.observe(item));
+      }
+
+      // Version tabs
+      const tabs = document.querySelectorAll(".version-tab");
+      const panels = document.querySelectorAll(".version-panel");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((item) => {
+            item.classList.remove("is-active");
+            item.setAttribute("aria-selected", "false");
+          });
+
+          panels.forEach((panel) => {
+            panel.classList.remove("is-active");
+            panel.hidden = true;
+          });
+
+          tab.classList.add("is-active");
+          tab.setAttribute("aria-selected", "true");
+
+          const panel = document.getElementById(tab.dataset.target);
+          panel.hidden = false;
+          requestAnimationFrame(() => panel.classList.add("is-active"));
+        });
+      });
+
+      // Screenshot lightbox
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.querySelector(".lightbox-close");
+
+      document.querySelectorAll(".result-card img").forEach((image) => {
+        image.addEventListener("click", () => {
+          lightboxImage.src = image.src;
+          lightboxImage.alt = image.alt;
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+          document.body.classList.add("lightbox-open");
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+        document.body.classList.remove("lightbox-open");
+      }
+
+      closeButton.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,23 @@
+# Virtual environment
+venv/
+.venv/
+.venv
+
+# Environment variables / API keys
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Streamlit cache
+.streamlit/
+
+# Local PDF files
+data/papers/*.pdf
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
