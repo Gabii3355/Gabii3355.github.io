@@ -2,20 +2,20 @@
 
 A lightweight Retrieval-Augmented Generation (RAG) prototype for asking questions about scientific PDF papers.
 
-The project was designed to remain small enough to run on a low-storage Linux environment. Instead of local embedding models, PyTorch, or FAISS, it uses **BM25Plus** for lexical retrieval and **Groq** for semantic reranking and answer generation.
+The project was designed to remain small enough to run in a Linux environment with limited storage. Instead of local embedding models, PyTorch, or FAISS, it uses **BM25Plus** for lexical retrieval and **Groq** for semantic reranking and answer generation.
 
 The current implementation supports both a simple terminal workflow (`app.py`) and a Streamlit interface (`streamlit_app.py`).
 
 ## Project goals
 
-The main goals of the project are to:
+The main goals of the project were to:
 
 - extract text from scientific PDF files,
 - split papers into overlapping text chunks,
 - retrieve passages relevant to a user question,
 - improve lexical BM25 results with an LLM reranking step,
 - generate answers grounded in the retrieved passages,
-- attach page-level citations to factual claims,
+- attach citations at the page level to factual claims,
 - expose the retrieval process so users can inspect the evidence used by the model.
 
 ## Repository structure
@@ -29,11 +29,10 @@ scientific-literature-assistant-groq/
 ├── .env.example
 ├── .gitignore
 ├── README.md
-├── LICENSE
 │
+├── src/
 ├── data/
 │   └── papers/
-│       └── README.md
 │
 └── docs/
     └── screenshots/
@@ -109,7 +108,7 @@ The first version of the project was planned around dense embeddings and FAISS. 
 
 For this prototype, BM25Plus was selected because it:
 
-- has a very small installation footprint,
+- has a small installation footprint,
 - does not require a GPU,
 - does not require downloading an embedding model,
 - works well for scientific terminology and exact phrases,
@@ -146,7 +145,7 @@ methods   -> methodology, analysis, workflow, approach
 results   -> finding, findings, observed
 ```
 
-### Low-value passage filtering
+### Low value passage filtering
 
 The retriever attempts to remove passages dominated by:
 
@@ -264,14 +263,6 @@ Create a local `.env` file in the project root:
 GROQ_API_KEY=your_groq_api_key_here
 ```
 
-Do not commit `.env` to GitHub.
-
-The repository should contain `.env.example` instead:
-
-```text
-GROQ_API_KEY=your_groq_api_key_here
-```
-
 ## Add scientific papers
 
 Place one or more PDF files in:
@@ -285,15 +276,6 @@ For example:
 ```text
 data/papers/example_paper.pdf
 ```
-
-The repository `.gitignore` should ignore local PDFs:
-
-```gitignore
-data/papers/*.pdf
-```
-
-This avoids accidentally publishing copyrighted or private documents.
-
 ## Run the terminal application
 
 ```bash
@@ -344,11 +326,11 @@ What were the main conclusions of this study?
 What conclusions did the authors draw from their results?
 ```
 
-A useful negative-control question is one whose answer is not present in the document. This helps test whether the model refuses to invent unsupported information.
+A useful control question is one whose answer is not present in the document. This helps test whether the model avoids inventing information that is not supported by the source.
 
 ## Current quality assessment
 
-The current system should be treated as a **working research prototype**, not as a production literature-review system.
+The current system should be treated as a **working research prototype**
 
 Manual testing on a scientific paper showed several encouraging behaviors.
 
@@ -462,35 +444,6 @@ The project currently demonstrates a complete lightweight RAG workflow:
 PDF parsing -> chunking -> BM25Plus retrieval -> filtering -> Groq reranking
 -> evidence-grounded answer generation -> page-level citations -> Streamlit UI
 ```
-
-It is suitable as a proof of concept and portfolio project for demonstrating:
-
-- scientific text processing,
-- information retrieval,
-- RAG architecture,
-- LLM API integration,
-- prompt design,
-- citation-aware answer generation,
-- Streamlit application development,
-- evaluation and iterative improvement of retrieval quality.
-
-The current design intentionally favors transparency and low local resource usage over maximum retrieval performance.
-
-## Security notes
-
-Never commit:
-
-```text
-.env
-venv/
-data/papers/*.pdf
-```
-
-The application sends the selected text passages to the external Groq API during reranking and answer generation. Do not use confidential or sensitive documents unless this data flow is appropriate for your use case.
-
-## License
-
-See the `LICENSE` file in the repository.
 
 ## Future direction
 
